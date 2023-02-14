@@ -52,6 +52,8 @@
         <link rel="stylesheet" href="../css/imageviewer.css" />
         
         <link rel="stylesheet" href="../css/Chart.min.css" />
+
+		<link rel="stylesheet" href="../css/sidenav-info.css" />
         
         <link href="../css/introjs.min.css" rel="stylesheet" />
         
@@ -638,15 +640,20 @@
 							</div>
 
 						</div>
-						<div class="col col-md-6" id="info-sidenav" style="width: 50%; border-left: 1px solid black; height: 100vh">
+						<div class="col col-md-6 sidenav-main" id="info-sidenav">
 
 							<div style="display: flex; flex-direction: row; flex-wrap: nowrap">
-								<div id="programming-lang-dropdown" style="display: flex; background: whitesmoke; border: 1px solid black; border-radius: 10px; height: 25px">
-									<img src="../img/code.png" alt="code-image" width="24" height="15" style="padding-right: 0; padding-left: 9px; margin-top: 3px" />
+								<div class="sidenav-program-btn" id="programming-lang-dropdown">
+									<img src="../img/code.png" alt="code-image" class="sidenav-code-img" />
 									<p style="margin: 0 8px">Python</p>
 									<img src="../img/caret-thin.png" alt="caret-image" width="15" height="15" style="margin-top: 3px; margin-right: 8px;"/>
 								</div>
+
+								<div class="sidenav-node-heading" id="node-text">
+									<p>data_gee_tmp_00001_100003234</p>
+								</div>
 							</div>
+
 
 						</div>
 					</div>

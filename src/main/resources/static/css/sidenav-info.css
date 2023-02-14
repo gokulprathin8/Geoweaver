@@ -1,0 +1,27 @@
+.sidenav-main {
+    width: 50%;
+    border-left: 1px solid black;
+    height: 100vh;
+}
+
+.sidenav-program-btn {
+    display: flex;
+    background: whitesmoke;
+    border: 1px solid black;
+    border-radius: 10px;
+    height: 25px
+}
+
+.sidenav-code-img {
+    padding-right: 0;
+    padding-left: 9px;
+    margin-top: 3px;
+    height: 15px;
+    width: 24px;
+}
+
+.sidenav-node-heading {
+    margin-left: 30px;
+    width: 60px;
+    text-overflow: ellipsis;
+}
