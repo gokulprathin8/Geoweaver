@@ -429,7 +429,7 @@ GW.workspace = {
 	    			var id = selectedNode.id.split("-")[0];
 	    			
 	    			GW.menu.details(id, "process");
-					this.showSideNavContainer();
+					GW.workspace.showSideNavContainer();
     	    	}
     	    	
     	    });
@@ -484,7 +484,11 @@ GW.workspace = {
     	
 		}, 
 		hideSideNavContainer: function() {
-
+			let sidenav = document.getElementById('info-sidenav');
+			let leftContainer = document.getElementById('main-workspace-container');
+			sidenav.style.display = "none";
+			leftContainer.style.width = "100%";
+			leftContainer.classList.replace('col-md-6', 'col-md-12');
 		},
 		showSideNavContainer: function() {
 			let sidenav = document.getElementById('info-sidenav');

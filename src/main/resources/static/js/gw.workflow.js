@@ -204,7 +204,7 @@ GW.workflow = {
 
 		switchTab(document.getElementById("main-workflow-info-code-tab"), "main-workflow-info-code");
 
-		GW.general.switchTab("workflow")
+		GW.general.switchTab("workflow");
 		
 	},
 
