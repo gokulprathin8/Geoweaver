@@ -429,6 +429,11 @@ GW.workspace = {
 	    			var id = selectedNode.id.split("-")[0];
 	    			
 	    			GW.menu.details(id, "process");
+					let sidenav = document.getElementById('info-sidenav');
+					let leftContainer = document.getElementById('main-workspace-container');
+					sidenav.style.display = "block";
+					leftContainer.classList.replace('col-md-12', 'col-md-6');
+					leftContainer.style.width = "40%";
     	    		
     	    	}
     	    	
