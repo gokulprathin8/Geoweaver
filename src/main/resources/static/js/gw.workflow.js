@@ -222,7 +222,7 @@ GW.workflow = {
 
 	switchTab: function (ele, name){
 	    		
-		console.log("Turn on the tab " + name)
+		console.log("Turn on the tab " + name + ele);
 		  
 		var i, tabcontent, tablinks;
 		tabcontent = document.getElementsByClassName("tabcontent-workflow");

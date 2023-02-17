@@ -1621,10 +1621,11 @@ GW.process = {
 			   		</div>
 				</div>
 			</div>`;
-			
+
 			$("#main-process-content").html(content);
 
-			switchTab(document.getElementById("main-process-info-code-tab"), "main-process-info-code");
+			// switchTab(document.getElementById("main-process-info-code-tab"), "main-process-info-code");
+
 
 			GW.general.switchTab("process");
 			
@@ -1681,7 +1682,7 @@ GW.process = {
 		
 		switchTab: function (ele, name){
 	    		
-			console.log("Turn on the tab " + name)
+			console.log("Turn on the tab " + name + ele)
 			  
 			var i, tabcontent, tablinks;
 			tabcontent = document.getElementsByClassName("tabcontent-process");
