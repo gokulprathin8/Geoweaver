@@ -640,7 +640,7 @@
 							</div>
 
 						</div>
-						<div class="col col-md-6 sidenav-main" id="info-sidenav">
+						<div class="col col-md-7 sidenav-main" id="info-sidenav">
 
 							<div style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-between">
 								<div style="display: flex; justify-content: flex-start">
@@ -653,7 +653,7 @@
 
 								<div style="display: flex; justify-content: center">
 									<div class="sidenav-node-heading" id="node-text">
-										<p>data_gee_tmp_00001_10000323456</p>
+										<p>data_test_geo</p>
 									</div>
 								</div>
 
@@ -680,7 +680,7 @@
 							</div>
 
 
-							<div id="editor-history-tab-panel" style="height:88%;width:100%;margin:0;padding: 0;">
+							<div id="editor-history-tab-panel" style="height:40rem;">
 
 								<div class="subtab tab titleshadow" data-intro="this is a tab inside the process tab panel">
 									<button class="tablinks-process active" id="main-process-info-code-tab" onclick="GW.process.openCity(event, 'main-process-info-code')">Code</button>
@@ -691,7 +691,7 @@
 									<button class="btn pull-right" onclick="GW.process.bottomDock()"><i class="fas fa-window-maximize"></i></button>
 									<button class="btn pull-right" onclick="GW.process.leftDock()"><i class="fas fa-window-maximize fa-rotate-270"></i></button>
 								</div>
-								<div id="main-process-info-code" class="tabcontent-process generalshadow" style="height: calc(100% - 150px); left: 0px; margin: 0px; padding: 0px; display: flex;">
+								<div id="main-process-info-code" class="tabcontent-process generalshadow" style="height: inherit; left: 0px; margin: 0px; padding: 0px; display: flex;">
 									<div class="code__container" style="font-size: 12px; margin:0; height:100%;" id="process-code-history-section">
 										<div id="process_code_window" class="container__left" style="height: 100%; padding: 0px; background-color: rgb(28, 28, 28);">
 											<div class="col col-md-6" id="code-embed" style="width: 100%; padding: 0px; margin: 0px;"><div class="CodeMirror cm-s-yonce CodeMirror-wrap" style="height: 100%; max-height: 100%;"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 44px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;" tabindex="0"></textarea></div><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 44px; margin-bottom: -5px; border-right-width: 25px; min-height: 25px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><div class="CodeMirror-linenumber CodeMirror-gutter-elt"><div>1</div></div></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"><div class="CodeMirror-cursor" style="left: 0px; top: 0px; height: 17.1406px;">&nbsp;</div></div><div class="CodeMirror-code" role="presentation"><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -44px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-builtin">print</span>(<span class="cm-string">'Hello World'</span>)</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 25px; width: 1px; border-bottom: 0px solid transparent; top: 25px;"></div><div class="CodeMirror-gutters" style="height: 50px; left: 0px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 36px;"></div><div class="CodeMirror-gutter CodeMirror-foldgutter"></div></div></div></div></div>
@@ -713,7 +713,31 @@
 							</div>
 							</div>
 
-							<hr>
+							<div id="sidenav-info-content" class="sidenav-advanced-info">
+								<hr>
+
+								<h4>Configuration Settings</h4>
+								<div style="display: flex; flex-direction: row">
+									<div class="col col-md-6">
+										<div style="display: inline">
+
+											<label>
+												<b>Confidential:</b>
+												<input type="radio" style="margin-left: 4px; margin-top: 4px;">
+											</label>
+										</div>
+									</div>
+
+									<div class="col col-md-6">
+										<div style="display: inline">
+											<label>
+												<b>Log:</b>
+												<input type="checkbox" style="margin-left: 4px; margin-top: 4px;"/>
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
 
 						</div>
 					</div>

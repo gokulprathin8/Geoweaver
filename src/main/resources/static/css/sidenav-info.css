@@ -1,5 +1,5 @@
 .sidenav-main {
-    width: 50%;
+    margin: 4px;
     border-left: 1px solid black;
     height: 100vh;
 }
@@ -35,4 +35,8 @@
 
 .sidenav-code-img:hover {
     cursor: pointer;
+}
+
+.sidenav-advanced-info {
+    padding-top: 40px;
 }
