@@ -1159,35 +1159,30 @@ GW.process = {
 				'		<label for="confidential-'+GW.process.cmid+'">Private</label>';
 //		       '			<input type="text" class="form-control form-control-sm" ></input>'+
 			confidential_field += '     </div>';
-			
-			var content = '<div><form>'+
-		       '   <div class="form-group row required">'+
-		       '     <label for="processcategory" style="font-size: 12px;" class="col-sm-2 col-form-label control-label">Language</label>'+
-		       '     <div class="col-sm-4">'+
-		       '			<select class="form-control form-control-sm" id="processcategory-'+GW.process.cmid+'">'+
-			   '    			<option value="shell">Shell</option>'+
-			   '    			<option value="builtin">Built-In Process</option>'+
-			   '    			<option value="jupyter">Jupyter Notebook</option>'+
-			   '    			<option value="python">Python</option>'+
-			   /*'    		<option value="python">Python</option>'+
-			   '    			<option value="r">R</option>'+
-			   '    			<option value="matlab">Matlab</option>'+*/
-			   '  		</select>'+
-		       '     </div>'+
-//		       '   </div>'+
-//		       '   <div class="form-group row required">'+
-		       '     <label for="processname" style="font-size: 12px;" class="col-sm-2 col-form-label control-label">Name</label>'+
-		       '     <div class="col-sm-4">'+
-		       '			<input type="text" class="form-control form-control-sm" id="processname-'+GW.process.cmid+'"></input>'+
-//		       '			<input type="text" class="form-control form-control-sm" ></input>'+
-		       '     </div>'+
-			   confidential_field+
-		       '   </div>'+
-		       '   <div class="form-group row required" id="codearea-'+GW.process.cmid+'"></div>'+
-		       '   <p class="h6"> <span class="badge badge-secondary">Ctrl+S</span> to save edits. Click <i class=\"fa fa-edit subalignicon\" onclick=\"GW.process.editSwitch()\" data-toggle=\"tooltip\" title=\"Enable Edit\"></i> to apply edits. </p>'+
-		       ' </form></div>';
-			
-			return content;
+
+			return '<div><form>' +
+				'   <div class="form-group row required">' +
+				'     <label for="processcategory" style="font-size: 12px;" class="col-sm-2 col-form-label control-label">Language</label>' +
+				'     <div class="col-sm-4">' +
+				'			<select class="form-control form-control-sm" id="processcategory-' + GW.process.cmid + '">' +
+				'    			<option value="shell">Shell</option>' +
+				'    			<option value="builtin">Built-In Process</option>' +
+				'    			<option value="jupyter">Jupyter Notebook</option>' +
+				'    			<option value="python">Python</option>' +
+				'  		</select>' +
+				'     </div>' +
+				//		       '   </div>'+
+				//		       '   <div class="form-group row required">'+
+				'     <label for="processname" style="font-size: 12px;" class="col-sm-2 col-form-label control-label">Name</label>' +
+				'     <div class="col-sm-4">' +
+				'			<input type="text" class="form-control form-control-sm" id="processname-' + GW.process.cmid + '"></input>' +
+				//		       '			<input type="text" class="form-control form-control-sm" ></input>'+
+				'     </div>' +
+				confidential_field +
+				'   </div>' +
+				'   <div class="form-group row required" id="codearea-' + GW.process.cmid + '"></div>' +
+				'   <p class="h6"> <span class="badge badge-secondary">Ctrl+S</span> to save edits. Click <i class=\"fa fa-edit subalignicon\" onclick=\"GW.process.editSwitch()\" data-toggle=\"tooltip\" title=\"Enable Edit\"></i> to apply edits. </p>' +
+				' </form></div>';
 			
 		},
 		
@@ -1623,9 +1618,6 @@ GW.process = {
 			</div>`;
 
 			$("#main-process-content").html(content);
-
-			// switchTab(document.getElementById("main-process-info-code-tab"), "main-process-info-code");
-
 
 			GW.general.switchTab("process");
 			

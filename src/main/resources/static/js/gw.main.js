@@ -115,8 +115,6 @@ GW.main = {
 GW.main.init();
 
 function switchTab(ele, name, onlyRender=false){
-	    		
-	console.log("Turn on the tab " + name + ' | ' + ele.className)
 
 	let i, content, tabLinks;
 
@@ -153,6 +151,7 @@ function switchTab(ele, name, onlyRender=false){
 	  GW.board.refresh();
 
 	}
+	GW.workspace.hideSideNavContainer();
 	  
 }
 
