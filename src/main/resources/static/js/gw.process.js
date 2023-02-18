@@ -1578,13 +1578,13 @@ GW.process = {
 			   
 			   '		</div>'+
 			   '   </div>' ;
-			
 			content += `<div id="editor-history-tab-panel" style="height:100%; width:100%; margin:0; padding: 0; background-color: white;">
 				
 				<div class="subtab tab titleshadow" data-intro="this is a tab inside the process tab panel">
 					<button class="tablinks-process" id="main-process-info-code-tab" onclick="GW.process.openCity(event, 'main-process-info-code')">Code</button>
 					<button class="tablinks-process" id="main-process-info-history-tab" onclick="GW.process.openCity(event, 'main-process-info-history'); GW.process.history('`+
 					process_id+`', '` + process_name+`')">History</button>
+					<button onclick="GW.workflow.showProcessLog(GW.workflow.history_id, GW.workspace.theGraph.state.selectedNode.id, GW.workspace.theGraph.state.selectedNode.title);">Process Log</button>
 					<button class="btn pull-right" onclick="GW.editor.switchFullScreen()" ><i class="glyphicon glyphicon-fullscreen"></i></button>
 					<button class="btn pull-right" onclick="GW.process.runProcess('`+
 					process_id+`', '`+process_name+`', '`+code_type+
