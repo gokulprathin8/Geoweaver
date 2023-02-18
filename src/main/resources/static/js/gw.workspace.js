@@ -395,42 +395,12 @@ GW.workspace = {
     	    	
     	    });
     	    
-    	    d3.select("#geoweaver-log").on("click", function(){
-    	    	
-    	    	//get the selected node id
-    	    	
-    	    	var selectedNode = GW.workspace.theGraph.state.selectedNode;
-    	    	
-    	    	if(selectedNode == null){
-    	    		
-    	    		alert("No process is selected");
-    	    		
-    	    	}else{
-    	    		
-    	    		GW.workflow.showProcessLog(GW.workflow.history_id, selectedNode.id, selectedNode.title);
-    	    		
-    	    	}
-    	    	
-    	    });
-    	    
     	    d3.select("#geoweaver-details").on("click", function(){
     	    	
     	    	//get the selected node id
     	    	
     	    	var selectedNode = GW.workspace.theGraph.state.selectedNode;
-    	    	
-    	    	if(selectedNode == null){
-    	    		
-    	    		// alert("No process is selected");
-					GW.general.switchTab("workflow");
-    	    		
-    	    	}else{
-    	    		
-	    			var id = selectedNode.id.split("-")[0];
-	    			
-	    			GW.menu.details(id, "process");
-					GW.workspace.showSideNavContainer();
-    	    	}
+				GW.general.switchTab("workflow");
     	    	
     	    });
     	    
@@ -687,6 +657,11 @@ GW.workspace = {
 	    	    }
 	    	    thisGraph.state.selectedNode = nodeData;
 	    	    console.log("selected node changed : " + nodeData.id);
+				GW.workspace.showSideNavContainer();
+				  let selectedNode = GW.workspace.theGraph.state.selectedNode;
+				  let id = selectedNode.id.split("-")[0];
+				  GW.menu.details(id, "process");
+				  GW.workspace.showSideNavContainer();
 	    	  };
 	    	  
 	    	  GW.workspace.GraphCreator.prototype.removeSelectFromNode = function(){
