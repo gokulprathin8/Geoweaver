@@ -57,3 +57,4 @@
 
 .cm-s-yonce .CodeMirror-activeline-background { background: #272727; }
 .cm-s-yonce .CodeMirror-matchingbracket { outline:1px solid grey; color:#D4D4D4 !important; }
+.CodeMirror.cm-s-yonce.CodeMirror-wrap {width: 100%; height: initial}
