@@ -820,7 +820,7 @@ GW.workspace = {
 				
 				GW.workflow.showProcessLog(GW.workflow.history_id, d.id, d.title);
 
-			  }
+			  } 
 	
 	    	  // mousedown on main svg
 	    	  GW.workspace.GraphCreator.prototype.svgMouseDown = function(){
