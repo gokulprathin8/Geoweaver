@@ -1619,7 +1619,7 @@ GW.process = {
 
 			content += `
 				<br />
-				<div style="overflow: scroll" id="dbclick_content">
+				<div id="dbclick_content">
 					<p>Process Name: ${process_name}</p>
 					<p>Process ID: ${process_id}</p>
 					<label>
@@ -1709,21 +1709,21 @@ GW.process = {
 			
 			var menuItem = " <p class=\"h6\" align=\"right\">"+
 			
-			"<button type=\"button\" class=\"btn btn-outline-primary\" onclick=\"GW.process.history('"+
+			"<button style='background: white; border: 1px solid grey' type=\"button\" class=\"btn btn-outline-primary\" onclick=\"GW.process.history('"+
         	
-			process_id+"', '" + process_name+"')\"><i class=\"fa fa-history subalignicon\"  data-toggle=\"tooltip\" title=\"List history logs\"></i> History </button>"+
+			process_id+"', '" + process_name+"')\"><i style='background: white;' class=\"fa fa-history subalignicon\"  data-toggle=\"tooltip\" title=\"List history logs\"></i> </button>"+
 			
-			" <button type=\"button\" class=\"btn btn-outline-primary\" onclick=\"GW.process.editSwitch()\">"+
+			" <button style='background: white; border: 1px solid grey' type=\"button\" class=\"btn btn-outline-primary\" onclick=\"GW.process.editSwitch()\">"+
 			
-			"<i class=\"fa fa-edit subalignicon\"  data-toggle=\"tooltip\" title=\"Enable Edit\"></i> Edit </button>"+
+			"<i style='background: white' class=\"fa fa-edit subalignicon\"  data-toggle=\"tooltip\" title=\"Enable Edit\"></i> </button>"+
 			
-			" <button type=\"button\" class=\"btn btn-outline-primary\" onclick=\"GW.process.runProcess('"+
+			" <button style='background: white; border: 1px solid grey' type=\"button\" class=\"btn btn-outline-primary\" onclick=\"GW.process.runProcess('"+
         	
-			process_id+"', '" + process_name + "', '" + code_type +"')\" ><i class=\"fa fa-play subalignicon\"  data-toggle=\"tooltip\" title=\"Run Process\"></i> Run </button> "+
+			process_id+"', '" + process_name + "', '" + code_type +"')\" ><i style='background: white' class=\"fa fa-play subalignicon\"  data-toggle=\"tooltip\" title=\"Run Process\"></i> </button> "+
 			
-			" <button type=\"button\" class=\"btn btn-outline-primary\" onclick=\"GW.menu.del('"+
+			" <button style='background: white; border: 1px solid grey' type=\"button\" class=\"btn btn-outline-primary\" onclick=\"GW.menu.del('"+
         	
-			process_id+"','process')\"><i class=\"fa fa-minus subalignicon\" style=\"color:red;\"  data-toggle=\"tooltip\" title=\"Delete this process\" > Delete</i>  </button>"+
+			process_id+"','process')\"><i style='background: white;' class=\"fa fa-minus subalignicon\" style=\"color:red;\"  data-toggle=\"tooltip\" title=\"Delete this process\" ></i>  </button>"+
 			
 			"</p>";
 			
