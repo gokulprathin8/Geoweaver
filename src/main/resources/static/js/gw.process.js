@@ -1619,12 +1619,15 @@ GW.process = {
 
 			content += `
 				<br />
-				<p>Process Name: ${process_name}</p>
-				<p>Process ID: ${process_id}</p>
-				<label>
-					Skip
-					<input type="checkbox" onclick='GW.workflow.skipprocess("\`+workflow_history_id+\`", "\`+process_id+\`");' id="skip_process_\`+process_id+\`" >
-				</label>
+				<div style="overflow: scroll" id="dbclick_content">
+					<p>Process Name: ${process_name}</p>
+					<p>Process ID: ${process_id}</p>
+					<label>
+						Skip
+						<input type="checkbox" onclick='GW.workflow.skipprocess("\`+workflow_history_id+\`", "\`+process_id+\`");' id="skip_process_\`+process_id+\`" >
+					</label>
+					<p>Output: </p>
+				</div>
 			`
 
 			$("#main-process-content").html(content);

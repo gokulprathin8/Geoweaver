@@ -1213,7 +1213,7 @@ GW.workflow = {
 					
 			<div class="row">
 		
-				<div class="col-md-12" id="dbclick_content">
+				<div class="col-md-12">
 
 					Process Name: `+process_title+` <br/>
 
