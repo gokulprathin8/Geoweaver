@@ -1,5 +1,6 @@
 package com.gw.commands;
 
+import com.gw.utils.WorkflowCLIService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +12,7 @@ import picocli.CommandLine.HelpCommand; // Default help subcommand, displays hel
 @Component
 @Command(subcommands = { HistoryCommand.class, PasswordResetCommand.class, RunCommand.class, 
                         ListCommand.class, DetailCommand.class, HelpCommand.class, 
-                        ImportCommand.class, ExportCommand.class})
+                        ImportCommand.class, ExportCommand.class, WorkflowCLIService.class})
 public class TopEntryCommand implements Runnable {
 
     Logger logger = Logger.getLogger(this.getClass());
