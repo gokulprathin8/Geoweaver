@@ -688,6 +688,7 @@ GW.workspace = {
 	    	    }
 	    	    thisGraph.state.selectedNode = nodeData;
 	    	    console.log("selected node changed : " + nodeData.id);
+				GW.sidenav.getData(nodeData.id);
 	    	  };
 	    	  
 	    	  GW.workspace.GraphCreator.prototype.removeSelectFromNode = function(){
