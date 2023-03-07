@@ -61,6 +61,7 @@ GW.process.sidepanel = {
 		}
 
         $('#prompt-process-panel').addClass('cd-panel--is-visible');
+        $('#workspace_status_indicator').css('right', '42%');
 
         $("#prompt-panel-main").html("");
         
@@ -176,8 +177,8 @@ GW.process.sidepanel = {
 
     close: function(){
 
+        $('#workspace_status_indicator').css('animation-delay', '0.5s').css('right', '20px');
         $('#prompt-process-panel').removeClass('cd-panel--is-visible');
-
     },
 
 
@@ -185,25 +186,6 @@ GW.process.sidepanel = {
 		let sidenav = document.getElementById('sidenav-editor');
 		sidenav.style.display = 'none';
 	},
-
-    whateverthisis: function(){
-
-        console.log("comes here 444");
-		tabLinks = document.getElementsByClassName("tablinks");
-		for (i = 0; i < tabLinks.length; i++) {
-			tabLinks[i].className = tabLinks[i].className.replace(" active", "");
-		}
-		document.getElementById(name).style.display = "flex";
-		ele.className += " active";
-
-		if(name === "main-dashboard"){
-
-			GW.board.refresh();
-
-		}
-		return
-    },
-
 
 	showSidenav: function() {
 		let sidenav = document.getElementById('sidenav-editor');
