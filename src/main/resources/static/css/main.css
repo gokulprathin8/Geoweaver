@@ -163,10 +163,6 @@ form .progress {
   border-top: none;
 }
 
-.workspace_indicator {
-  transition: all 0.3s ease;
-}
-
 #process-history-chart-container {
 
   width: 200px;
