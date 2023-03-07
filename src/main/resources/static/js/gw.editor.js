@@ -37,6 +37,18 @@ GW.editor = {
             this.isfullscreen = false;
         }
 
+    },
+
+    switchFullScreenPromptProcessPanel: () => {
+        let processPanel = $(".cd-panel__container");
+        let processPanelHeader = $(".cd-panel__header");
+        if (processPanel.css('width') === '100%') {
+            processPanel.css('width', '30%').css('z-index', '');
+            processPanelHeader.css('width', '30%').css('z-index', '');
+        } else {
+            processPanel.css('width', '100%').css('z-index', '999');
+            processPanelHeader.css('width', '100%').css('z-index', '999');
+        }
     }
 
 

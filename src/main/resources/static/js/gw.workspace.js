@@ -690,7 +690,9 @@ GW.workspace = {
 			console.log("selected node changed : " + nodeData.id);
 
 			// show the prompt process panel
-			GW.process.sidepanel.close()
+			GW.process.sidepanel.close();
+		    $(".cd-panel__container").css('width', '30%').css('z-index', '');
+			$(".cd-panel__header").css('width', '30%').css('z-index', '');
 			GW.process.sidepanel.open_panel(GW.workflow.history_id, nodeData.id, nodeData.title)
 
 		  };

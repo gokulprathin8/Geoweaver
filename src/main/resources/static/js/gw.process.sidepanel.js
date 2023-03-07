@@ -92,12 +92,9 @@ GW.process.sidepanel = {
                 <button class="tablinks-process" id="prompt-process-main-process-info-code-tab" onclick="GW.process.openCity(event, 'prompt-process-main-process-info-code')">Code</button>
                 <button class="tablinks-process" id="prompt-process-main-process-info-history-tab" onclick="GW.process.openCity(event, 'prompt-process-main-process-info-history'); GW.process.sidepanel.history('`+this.current_process_id+`', '` + this.current_process_name+`')">History</button>
 
-                <!-- TODO: play button, save button, full screen button-->
-                <!--
-                    <button class="btn pull-right" onclick="GW.process.sidepanel.switchFullScreen()" ><i class="glyphicon glyphicon-fullscreen"></i></button>
-                    <button class="btn pull-right" onclick="GW.process.sidepanel.runProcess('`+ this.current_process_id+`', '`+this.current_process_name+`', '`+code_type+`');" ><i class="glyphicon glyphicon-play"></i></button>
-                    <button class="btn pull-right" onclick="GW.process.sidepanel.editSwitch()" ><i class="glyphicon glyphicon-floppy-saved"></i></button>
-                -->
+                <button class="btn pull-right" onclick="GW.editor.switchFullScreenPromptProcessPanel()" ><i class="glyphicon glyphicon-fullscreen"></i></button>
+                <button class="btn pull-right" onclick="GW.process.runProcess('`+ this.current_process_id+`', '`+this.current_process_name+`', '`+code_type+`');" ><i class="glyphicon glyphicon-play"></i></button>
+<!--                <button class="btn pull-right" onclick="GW.process.sidepanel.editSwitch()" ><i class="glyphicon glyphicon-floppy-saved"></i></button>-->
 
 
                 <button class="btn pull-right" onclick="GW.process.sidepanel.bottomDock()" ><i class="fas fa-window-maximize"></i></button>

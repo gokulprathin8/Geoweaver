@@ -1303,6 +1303,8 @@ GW.process = {
 	display: function(msg){
 
 		GW.process.sidepanel.close() //close the side panel when the normal window shows up
+		$(".cd-panel__container").css('width', '30%').css('z-index', '');
+		$(".cd-panel__header").css('width', '30%').css('z-index', '');
 		
 		GW.process.editOn = false;
 
