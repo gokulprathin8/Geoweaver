@@ -2,6 +2,7 @@ package com.gw.commands;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gw.database.HistoryRepository;
+import com.gw.jpa.GWProcess;
 import com.gw.jpa.History;
 import com.gw.jpa.Workflow;
 import com.gw.tools.ProcessTool;
@@ -93,6 +94,17 @@ public class ImportWorkflowDirectoryCommand implements Runnable {
                     }
                 }
             }
+
+            // save process
+            Path processFilePath = Paths.get(workflowPath + PROCESS_FILE);
+            if (Files.exists(processFilePath)) {
+                Object processObject = parser.parse(new FileReader(workflowPath + PROCESS_FILE));
+                GWProcess process = processTool.fromJSON((String) processObject);
+                processTool.save(process);
+            }
+
+
+            System.out.println("Completed workflow import");
 
 //            String workflowJSON = bt.getWorkflowJsonPath(workflowPath);
 //            String workflowFolderPath = workflowJSON.substring(0,
