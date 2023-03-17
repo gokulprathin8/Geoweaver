@@ -1,19 +1,15 @@
 package com.gw.jpa;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import java.nio.file.Path;
+import javax.persistence.*;
 
 @Entity
 public class WorkflowDirectory {
     @Id
-    @Column
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column
-    private String workflowId;
+    private String workflowDirectoryName;
 
     @Column
     private String directoryPath;
@@ -26,12 +22,12 @@ public class WorkflowDirectory {
         return id;
     }
 
-    public String getWorkflowId() {
-        return workflowId;
+    public String getWorkflowDirectoryName() {
+        return workflowDirectoryName;
     }
 
-    public void setWorkflowId(String workflowId) {
-        this.workflowId = workflowId;
+    public void setWorkflowDirectoryName(String workflowId) {
+        this.workflowDirectoryName = workflowId;
     }
 
     public String getDirectoryPath() {
@@ -39,6 +35,13 @@ public class WorkflowDirectory {
     }
 
     public void setDirectoryPath(String directoryPath) {
+        this.directoryPath = directoryPath;
+    }
+
+    public WorkflowDirectory() {}
+
+    public WorkflowDirectory(String workflowDirectoryName, String directoryPath) {
+        this.workflowDirectoryName = workflowDirectoryName;
         this.directoryPath = directoryPath;
     }
 }

@@ -2,9 +2,11 @@ package com.gw.commands;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gw.database.HistoryRepository;
+import com.gw.database.WorkflowDirectoryRepository;
 import com.gw.jpa.GWProcess;
 import com.gw.jpa.History;
 import com.gw.jpa.Workflow;
+import com.gw.jpa.WorkflowDirectory;
 import com.gw.tools.ProcessTool;
 import com.gw.tools.WorkflowTool;
 import com.gw.utils.BaseTool;
@@ -20,7 +22,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.nio.file.*;
-import java.util.Map;
 
 @Component
 @CommandLine.Command(name = "directory", description = "import a unzipped directory into geoweaver")
@@ -103,6 +104,9 @@ public class ImportWorkflowDirectoryCommand implements Runnable {
                 processTool.save(process);
             }
 
+            WorkflowDirectoryRepository workflowDirectoryRepository = BeanTool.getBean(WorkflowDirectoryRepository.class);
+            WorkflowDirectory workflowDirectoryObject = new WorkflowDirectory(workflowDirectoryName.toString(), workflowPath);
+            workflowDirectoryRepository.save(workflowDirectoryObject);
 
             System.out.println("Completed workflow import");
 

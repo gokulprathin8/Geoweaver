@@ -1,8 +1,10 @@
 package com.gw.database;
 
 import com.gw.jpa.WorkflowDirectory;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface WorkflowDirectoryRepository extends JpaRepository<WorkflowDirectory, String> {
+@Repository
+public interface WorkflowDirectoryRepository extends CrudRepository<WorkflowDirectory, Long> {
 
 }
