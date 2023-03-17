@@ -9,7 +9,7 @@ import picocli.CommandLine.Command;
 public class RunCommand implements Runnable {
 
     public void run() {
-        
+
     }
     
 }

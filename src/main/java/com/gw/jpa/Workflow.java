@@ -14,7 +14,7 @@ public class Workflow {
 	private String name, description, owner;
 
 	private String confidential;
-	
+
 	@Lob
 	@Column(columnDefinition = "LONGTEXT")
 	private String edges;
@@ -22,7 +22,6 @@ public class Workflow {
 	@Lob
 	@Column(columnDefinition = "LONGTEXT")
 	private String nodes;
-	
 	
 	public String getConfidential() {
 		return this.confidential;
