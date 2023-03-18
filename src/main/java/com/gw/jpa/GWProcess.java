@@ -35,6 +35,18 @@ public class GWProcess {
 	//true: private; false: public
 	String confidential;
 
+	public GWProcess() {
+	}
+
+	public GWProcess(String id, String name, String description, String code, String lang, String owner, String confidential) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.code = code;
+		this.lang = lang;
+		this.owner = owner;
+		this.confidential = confidential;
+	}
 
 	public String getOwner() {
 		return this.owner;

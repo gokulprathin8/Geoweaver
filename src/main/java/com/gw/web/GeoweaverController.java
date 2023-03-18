@@ -1,10 +1,7 @@
 package com.gw.web;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -16,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.gw.database.WorkflowDirectoryRepository;
 import com.gw.database.WorkflowRepository;
+import com.gw.dto.GWProcessDTO;
 import com.gw.jpa.*;
 import com.gw.search.GWSearchTool;
 import com.gw.ssh.RSAEncryptTool;
@@ -1138,15 +1136,15 @@ public class GeoweaverController {
 	}
 
 	@RequestMapping(value = "/edit/process", method = RequestMethod.POST)
-    public @ResponseBody String editprocess(ModelMap model, @RequestBody GWProcess up, WebRequest request){
+    public @ResponseBody String editprocess(ModelMap model, @RequestBody GWProcessDTO up, WebRequest request){
 		
 		String resp = null;
 		
 		try {
 			
 			checkID(up.getId());
-			
-			pt.save(up);
+			pt.save(new GWProcess(up.getId(), up.getName(), up.getDescription(), up.getCode(), up.getLang(), up.getOwner(),
+					up.getConfidential()));
 			
 			resp = "{\"id\" : \"" + up.getId() + "\"}";
 			
@@ -1158,7 +1156,31 @@ public class GeoweaverController {
 			throw new RuntimeException("failed " + e.getLocalizedMessage());
 			
 		}
-		
+
+		String code = up.getCode();
+		String directoryName = up.getWorkflowId();
+		String fileName = up.getName();
+		String tmpDirectory = bt.getFileTransferFolder() + directoryName + "/code";
+		File dir = new File(tmpDirectory);
+		File[] matches = dir.listFiles(new FilenameFilter()
+		{
+			public boolean accept(File dir, String name)
+			{
+				return name.startsWith(fileName);
+			}
+		});
+		System.out.println(fileName);
+		System.out.println(tmpDirectory);
+		System.out.println(matches);
+		if (matches.length != 0) {
+			System.out.println("writing file 2");
+			Path sourceCodeUpdatePath = Path.of(matches[0].getAbsolutePath());
+			PrintWriter printWriter = new PrintWriter((Writer) sourceCodeUpdatePath);
+			printWriter.println(code);
+			printWriter.close();
+		}
+
+
 		return resp;
 		
 	}

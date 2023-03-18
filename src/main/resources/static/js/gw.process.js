@@ -1778,6 +1778,8 @@ GW.process = {
 	updateBuiltin: function(){
 		
 		var pid = $("#processid").val();
+
+		var wid = $("#display_workflow_id").text();
 		
 		var plang = $("#processcategory").val();
 		
@@ -1807,11 +1809,11 @@ GW.process = {
 
 		pcode = JSON.stringify(pcode);
 		
-		this.updateRaw(pid, pname, plang, pdesc, pcode, confidential);
+		this.updateRaw(pid, pname, plang, pdesc, pcode, confidential, wid);
 		
 	},
 	
-	updateRaw: function(pid, pname, plang, pdesc, pcode, confidential){
+	updateRaw: function(pid, pname, plang, pdesc, pcode, confidential, wid){
 		
 		var req =  {
 				
@@ -1829,7 +1831,9 @@ GW.process = {
 
 				confidential: confidential,
 				
-				code: pcode
+				code: pcode,
+
+				workflowId: wid
 				
 		};
 		
@@ -1858,6 +1862,7 @@ GW.process = {
 				GW.process.refreshProcessList();
 
 				GW.process.showSaved();
+
 				
 			}).fail(function(jqXHR, textStatus){
 				
@@ -1873,7 +1878,8 @@ GW.process = {
 		console.log("update process id: " + pid);
 		
 		// if(this.precheck()){
-			
+		var wid = $("#display_workflow_id").text();
+
 		var plang = $("#processcategory").val();
 		
 		var pname = $("#processname").val();
@@ -1888,7 +1894,7 @@ GW.process = {
 			if(plang=="builtin"){
 				GW.process.updateBuiltin();
 			}else{
-				GW.process.updateRaw(pid, pname, plang, pdesc, pcode, confidential);
+				GW.process.updateRaw(pid, pname, plang, pdesc, pcode, confidential, wid);
 			}
 			
 		}
