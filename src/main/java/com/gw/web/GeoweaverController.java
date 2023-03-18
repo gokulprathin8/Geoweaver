@@ -10,6 +10,7 @@ import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.gw.database.WorkflowDirectoryRepository;
 import com.gw.database.WorkflowRepository;
 import com.gw.jpa.GWProcess;
 import com.gw.jpa.GWUser;
@@ -108,6 +109,9 @@ public class GeoweaverController {
 
 	@Autowired
 	UserTool ut;
+
+	@Autowired
+	WorkflowDirectoryRepository workflowDirectoryRepository;
 	
 	public static SessionManager sessionManager;
 	
@@ -1732,6 +1736,12 @@ public class GeoweaverController {
         //do something like logging
         return "error";
     }
+
+	@RequestMapping(value = "/directory-import-file-replace", method = RequestMethod.POST)
+	public void directoryImport(WebRequest request) {
+		String workflowName = request.getParameter("workflowName");
+
+	}
     
     void checkID(String id) {
     	
