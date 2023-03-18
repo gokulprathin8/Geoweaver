@@ -1194,7 +1194,7 @@ public class GeoweaverController {
 			try {
 				Files.copy(sourceDirectory, targetDirectory, StandardCopyOption.REPLACE_EXISTING);
 			} catch (IOException e) {
-				System.out.println(e.toString());
+				System.out.println(e);
 			}
 
 		}
