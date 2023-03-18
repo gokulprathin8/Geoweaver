@@ -1,10 +1,13 @@
 package com.gw.commands;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gw.database.WorkflowDirectoryRepository;
+import com.gw.jpa.WorkflowDirectory;
 import com.gw.tools.WorkflowTool;
 import com.gw.utils.BaseTool;
 import com.gw.utils.BeanTool;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
@@ -20,7 +23,6 @@ public class FlattenedWorkflowCommand implements Runnable{
 
 //    @CommandLine.Option(names = {"-p", "--workflow-json-path"}, description = "path to geoweaver workflow json")
 //    String workflowJSON;
-
     @CommandLine.Parameters(index = "0", description = "Path to geoweaver workflow.json")
     String workflowJSON;
 
@@ -36,9 +38,13 @@ public class FlattenedWorkflowCommand implements Runnable{
             ObjectMapper mapper = new ObjectMapper();
             Map<String, String> map = mapper.readValue(resp, Map.class);
             String wid = String.valueOf(map.get("id"));
-            workflowJSON = workflowJSON + "."; // bypass substring check
-            wt.saveWorkflowFromFolder(wid, String.valueOf(Paths.get(workflowJSON).getFileName()));
-
+            String workflowJSONFolder = workflowJSON + "."; // bypass substring check
+            wt.saveWorkflowFromFolder(wid, String.valueOf(Paths.get(workflowJSONFolder).getFileName()));
+            WorkflowDirectoryRepository wdr = BeanTool.getBean(WorkflowDirectoryRepository.class);
+            WorkflowDirectory workflowDirectory = new WorkflowDirectory();
+            workflowDirectory.setGwWorkspacePath(String.valueOf(Paths.get(workflowJSON).getFileName()));
+            workflowDirectory.setSourcePath(String.valueOf(Paths.get(workflowJSON).getParent().toAbsolutePath()));
+            wdr.save(workflowDirectory);
         } catch (Exception e) {
             System.out.printf(e.toString());
         }
