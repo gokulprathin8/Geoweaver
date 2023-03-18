@@ -3,7 +3,11 @@ package com.gw.web;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 import javax.annotation.PreDestroy;
@@ -1179,6 +1183,21 @@ public class GeoweaverController {
 			throw new RuntimeException("failed " + e.getLocalizedMessage());
 			
 		}
+
+		Optional<WorkflowDirectory> recentWorkFlowPath = workflowDirectoryRepository.getRecentWorkFlowPath(w.getId());
+		System.out.println(recentWorkFlowPath);
+		if (recentWorkFlowPath.isPresent()) {
+			WorkflowDirectory workflowDirectory = recentWorkFlowPath.get();
+			Path sourceDirectory = Path.of(bt.getFileTransferFolder() + workflowDirectory.getGwWorkspacePath());
+			Path targetDirectory = Path.of(workflowDirectory.getSourcePath() + "/" + workflowDirectory.getGwWorkspacePath());
+
+			try {
+				Files.copy(sourceDirectory, targetDirectory, StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				System.out.println(e.toString());
+			}
+
+		}
 		
 		return resp;
 		
@@ -1733,15 +1752,6 @@ public class GeoweaverController {
         //do something like logging
         return "error";
     }
-
-	@RequestMapping(value = "/directory-import-file-replace", method = RequestMethod.POST)
-	public void directoryImport(WebRequest request) {
-		String workflowName = request.getParameter("workflowName");
-		Optional<WorkflowDirectory> workflowPath = workflowDirectoryRepository.getRecentWorkFlowPath(workflowName);
-		if (workflowPath.isPresent()) {
-			System.out.println(workflowPath); // update this to replace file path
-		}
-	}
     
     void checkID(String id) {
     	
