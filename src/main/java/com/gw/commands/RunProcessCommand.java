@@ -33,6 +33,9 @@ public class RunProcessCommand  implements Runnable {
     @Option(names = { "-p", "--password" }, description = "password to the target host")
     String pass;
 
+    @Option(names = {"-w", "--workflow-json-path"}, description = "Path to workflow.json")
+    String workflowJSONPath;
+
     public void run(){
 
         ProcessTool pt = BeanTool.getBean(ProcessTool.class);

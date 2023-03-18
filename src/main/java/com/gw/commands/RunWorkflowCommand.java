@@ -43,7 +43,7 @@ public class RunWorkflowCommand  implements Runnable {
 
     public void run() {
 
-        System.out.println(String.format("Running workflow %s", workflowId));
+        System.out.printf("Running workflow %s%n", workflowId);
         
         if (workflowZipOrPathToJson != null) 
         
@@ -60,13 +60,13 @@ public class RunWorkflowCommand  implements Runnable {
         String response = wt.execute(historyId, workflowId, "one", hostStrings, 
                                     passes, envs, "xxxxxxxxxx");
 
-        System.out.println(String.format("The workflow has been kicked off.\nHistory Id: %s", historyId));
+        System.out.printf("The workflow has been kicked off.\nHistory Id: %s%n", historyId);
 
         System.out.println("Waiting for it to finish");
 
         HistoryTool ht = BeanTool.getBean(HistoryTool.class);
 
-        History hist = ht.getHistoryById(historyId);;
+        History hist = ht.getHistoryById(historyId);
 
         try {
         
@@ -87,11 +87,11 @@ public class RunWorkflowCommand  implements Runnable {
         }
 
 
-        System.out.println(String.format("Total time cost: %o seconds", 
-                           BaseTool.calculateDuration(hist.getHistory_begin_time(), hist.getHistory_end_time())));
+        System.out.printf("Total time cost: %o seconds%n",
+                           BaseTool.calculateDuration(hist.getHistory_begin_time(), hist.getHistory_end_time()));
         
                            
-        System.out.println(String.format("Execution is over. Final status: %s.", hist.getIndicator()));
+        System.out.printf("Execution is over. Final status: %s.%n", hist.getIndicator());
 
     }
     
