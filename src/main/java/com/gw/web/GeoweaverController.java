@@ -1171,13 +1171,20 @@ public class GeoweaverController {
 		});
 		System.out.println(fileName);
 		System.out.println(tmpDirectory);
-		System.out.println(matches);
-		if (matches.length != 0) {
+		System.out.println(Arrays.toString(matches));
+		if (matches != null) {
 			System.out.println("writing file 2");
 			Path sourceCodeUpdatePath = Path.of(matches[0].getAbsolutePath());
-			PrintWriter printWriter = new PrintWriter((Writer) sourceCodeUpdatePath);
-			printWriter.println(code);
-			printWriter.close();
+			File codeFile = new File(sourceCodeUpdatePath.toUri());
+			try {
+				DataOutputStream stream = new DataOutputStream(new FileOutputStream(codeFile, false));
+				stream.write(code.getBytes());
+				stream.close();
+			} catch (java.io.FileNotFoundException e) {
+				System.out.println(e.getMessage());
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
 		}
 
 
