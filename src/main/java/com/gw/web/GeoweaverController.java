@@ -33,6 +33,7 @@ import com.gw.utils.RandomString;
 import com.gw.tools.UserTool;
 import com.gw.tools.ExecutionTool;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -1185,14 +1186,13 @@ public class GeoweaverController {
 		}
 
 		Optional<WorkflowDirectory> recentWorkFlowPath = workflowDirectoryRepository.getRecentWorkFlowPath(w.getId());
-		System.out.println(recentWorkFlowPath);
 		if (recentWorkFlowPath.isPresent()) {
 			WorkflowDirectory workflowDirectory = recentWorkFlowPath.get();
 			Path sourceDirectory = Path.of(bt.getFileTransferFolder() + workflowDirectory.getGwWorkspacePath());
 			Path targetDirectory = Path.of(workflowDirectory.getSourcePath() + "/" + workflowDirectory.getGwWorkspacePath());
 
 			try {
-				Files.copy(sourceDirectory, targetDirectory, StandardCopyOption.REPLACE_EXISTING);
+				FileUtils.copyDirectory(sourceDirectory.toFile(), targetDirectory.toFile());
 			} catch (IOException e) {
 				System.out.println(e);
 			}
