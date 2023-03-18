@@ -12,10 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.gw.database.WorkflowDirectoryRepository;
 import com.gw.database.WorkflowRepository;
-import com.gw.jpa.GWProcess;
-import com.gw.jpa.GWUser;
-import com.gw.jpa.Host;
-import com.gw.jpa.Workflow;
+import com.gw.jpa.*;
 import com.gw.search.GWSearchTool;
 import com.gw.ssh.RSAEncryptTool;
 import com.gw.ssh.SSHSession;
@@ -1740,7 +1737,10 @@ public class GeoweaverController {
 	@RequestMapping(value = "/directory-import-file-replace", method = RequestMethod.POST)
 	public void directoryImport(WebRequest request) {
 		String workflowName = request.getParameter("workflowName");
-
+		Optional<WorkflowDirectory> workflowPath = workflowDirectoryRepository.getRecentWorkFlowPath(workflowName);
+		if (workflowPath.isPresent()) {
+			System.out.println(workflowPath); // update this to replace file path
+		}
 	}
     
     void checkID(String id) {

@@ -291,6 +291,8 @@ GW.workflow = {
 			GW.general.showToasts("updated");
 		    
 			GW.workflow.refreshWorkflowList();
+
+			GW.workflow.updateExternalDirectory();
 			
 		}).fail(function(jxr, status){
 			
@@ -298,6 +300,17 @@ GW.workflow = {
 			
 		});
 
+	},
+
+	updateExternalDirectory: function() {
+		let responseBody = {"workflowName": $("#display_workflow_id").text()};
+		$.ajax({
+			url: "directory-import-file-replace",
+			method: "POST",
+			contentType: 'application/json',
+			dataType: 'json',
+			data: JSON.stringify(responseBody)
+		})
 	},
 	
 		
@@ -575,6 +588,7 @@ GW.workflow = {
 			}).done(function(msg){
 				
 				GW.workspace.showSaved();
+				GW.workflow.updateExternalDirectory();
 				// alert("Saved!!!");
 				
 			}).fail(function(jxr, status){
