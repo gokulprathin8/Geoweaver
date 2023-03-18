@@ -13,6 +13,7 @@ import picocli.CommandLine;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.Scanner;
 
 @Component
 @CommandLine.Command(name = "workflow-directory", description = "Run a workflow in geoweaver directly from directory")
@@ -38,10 +39,16 @@ public class FlattenedWorkflowCommand implements Runnable{
             String workflowJSONFolder = workflowJSON + "."; // bypass substring check
             wt.saveWorkflowFromFolder(wid, String.valueOf(Paths.get(workflowJSONFolder).getFileName()));
             WorkflowDirectoryRepository wdr = BeanTool.getBean(WorkflowDirectoryRepository.class);
-            WorkflowDirectory workflowDirectory = new WorkflowDirectory();
-            workflowDirectory.setGwWorkspacePath(String.valueOf(Paths.get(workflowJSON).getFileName()));
-            workflowDirectory.setSourcePath(String.valueOf(Paths.get(workflowJSON).getParent().toAbsolutePath()));
-            wdr.save(workflowDirectory);
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Do you wish to save your code changes from Geoweaver to your Code Directory?  [Y/N]:  ");
+            String userInput = scanner.nextLine();
+            if (userInput.equalsIgnoreCase("y") || userInput.equalsIgnoreCase("yes")) {
+                WorkflowDirectory workflowDirectory = new WorkflowDirectory();
+                workflowDirectory.setGwWorkspacePath(String.valueOf(Paths.get(workflowJSON).getFileName()));
+                workflowDirectory.setSourcePath(String.valueOf(Paths.get(workflowJSON).getParent().toAbsolutePath()));
+                wdr.save(workflowDirectory);
+            }
+            System.out.println("Export completed.");
         } catch (Exception e) {
             System.out.printf(e.toString());
         }
