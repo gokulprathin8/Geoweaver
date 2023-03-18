@@ -2,6 +2,8 @@ package com.gw.tools;
 
 import java.io.File;
 import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -830,7 +832,7 @@ public class WorkflowTool {
         return fileurl;
     }
 
-    public String precheck(String filename) {
+    public String precheck(String filename, Boolean isWorkflowDirectory) {
 
 		// { "url": "download/temp/aavthwdfvxinra0a0rsw.zip", "filename": "aavthwdfvxinra0a0rsw.zip" }
 
@@ -838,18 +840,22 @@ public class WorkflowTool {
 
 		StringBuffer respjson = new StringBuffer();
 
-		if(filename.endsWith(".zip")){
+		if(filename.endsWith(".zip") || isWorkflowDirectory){
 
 			try{
+				String workflowJsonPath = "";
+				if (isWorkflowDirectory) {
+					Path weaverDirectoryPath = Paths.get(filename).getParent();
+					String folderName = String.valueOf(weaverDirectoryPath.getFileName());
+					workflowJsonPath = bt.getWorkflowJsonPath(filename);
+				} else {
+					String foldername = filename.substring(0, filename.lastIndexOf("."));
+					String folder_path = bt.getFileTransferFolder() + foldername + FileSystems.getDefault().getSeparator();
+					bt.unzip(filepath, folder_path);
+					// Get the workflowjson path, by traversing the folder
+					workflowJsonPath = bt.getWorkflowJsonPath(folder_path);
+				}
 
-				String foldername = filename.substring(0, filename.lastIndexOf("."));
-
-				String folder_path = bt.getFileTransferFolder() + foldername + FileSystems.getDefault().getSeparator();
-
-				bt.unzip(filepath, folder_path);
-
-				// Get the workflowjson path, by traversing the folder
-				String workflowJsonPath = bt.getWorkflowJsonPath(folder_path);
 
 				// if the workflowjson is not found, return invalid workflow package, cause the workflowjson is required
 				if (workflowJsonPath.equals("")) {

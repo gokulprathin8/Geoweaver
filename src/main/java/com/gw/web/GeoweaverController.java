@@ -1091,7 +1091,7 @@ public class GeoweaverController {
 			
 			String filename = request.getParameter("filename");
 			
-			resp = wt.precheck(filename);
+			resp = wt.precheck(filename, false);
 			
 		}catch(Exception e) {
 			

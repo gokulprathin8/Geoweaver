@@ -36,7 +36,7 @@ public class ImportWorkflowCommand implements Runnable {
                     new File(bt.getFileTransferFolder() + filename).toPath(), StandardCopyOption.REPLACE_EXISTING);
             
             //second, precheck the folder is valid geoweaver package
-            String resp = wt.precheck(filename);
+            String resp = wt.precheck(filename, false);
             System.out.println("Precheck: Done");
             ObjectMapper mapper = new ObjectMapper();
             Map<String, String> map = mapper.readValue(resp, Map.class);
