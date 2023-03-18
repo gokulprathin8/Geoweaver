@@ -31,16 +31,13 @@ public class FlattenedWorkflowCommand implements Runnable{
             BaseTool bt = BeanTool.getBean(BaseTool.class);
             Path sourceDirectory = Paths.get(workflowJSON).toAbsolutePath();
             Path destinationDirectory = Paths.get(bt.getFileTransferFolder() + Paths.get(workflowJSON).getFileName());
-            System.out.println(sourceDirectory);
-            System.out.println(destinationDirectory);
             FileUtils.copyDirectory(sourceDirectory.toFile(), destinationDirectory.toFile());
             String resp = wt.precheck(workflowJSON, true);
             ObjectMapper mapper = new ObjectMapper();
             Map<String, String> map = mapper.readValue(resp, Map.class);
             String wid = String.valueOf(map.get("id"));
             workflowJSON = workflowJSON + "."; // bypass substring check
-            wt.saveWorkflowFromFolder(wid, workflowJSON);
-            System.out.println("here");
+            wt.saveWorkflowFromFolder(wid, String.valueOf(Paths.get(workflowJSON).getFileName()));
 
         } catch (Exception e) {
             System.out.printf(e.toString());
