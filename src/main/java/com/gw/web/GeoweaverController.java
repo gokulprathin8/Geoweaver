@@ -1169,9 +1169,6 @@ public class GeoweaverController {
 				return name.startsWith(fileName);
 			}
 		});
-		System.out.println(fileName);
-		System.out.println(tmpDirectory);
-		System.out.println(Arrays.toString(matches));
 		if (matches != null) {
 			System.out.println("writing file 2");
 			Path sourceCodeUpdatePath = Path.of(matches[0].getAbsolutePath());
