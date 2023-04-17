@@ -7,28 +7,31 @@ import com.gw.utils.BaseTool;
 
 import org.springframework.stereotype.Component;
 
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
 @Command(name = "resetpassword", description = "Reset password of local host")
 @Component
 public class PasswordResetCommand implements Runnable {
 
+    @CommandLine.Option(names = {"-p", "--password"}, description = "New password")
+    private String newPassword;
+
     public void run() {
-        Console console = System.console();
-        if (console == null) {
-            System.out.println("Couldn't get Console instance");
-            System.exit(0);
+
+        if (newPassword == null || newPassword.isEmpty()) {
+            System.out.println("Error: New password value is missing.");
+            return;
         }
 
-        console.printf("Reset Geoweaver Localhost password%n");
-        char[] passwordArray = console.readPassword("Enter password: ");
-        // console.printf("Password entered was: %s%n", new String(passwordArray));
-        char[] secondpasswordArray = console.readPassword("Retype password: ");
+        char[] passwordArray = newPassword.toCharArray();
+        char[] secondpasswordArray = newPassword.toCharArray();
 
+        // compare password arrays to confirm
         if(Arrays.equals(passwordArray, secondpasswordArray)){
 
             String originalpassword = new String(passwordArray);
-        
+
             BaseTool bt = new BaseTool();
 
             bt.setLocalhostPassword(originalpassword, true);
