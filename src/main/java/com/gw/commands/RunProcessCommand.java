@@ -45,22 +45,22 @@ public class RunProcessCommand  implements Runnable {
 
         ExecutionTool et = BeanTool.getBean(ExecutionTool.class);
 
-        System.out.println(String.format("Staring process %s", processid));
+        System.out.printf("Staring process %s%n", processid);
 
         String response = et.executeProcess(historyid, processid, hostid, pass, "runfromcmd", true, envid);
         
         History hist = null;
 
         try {
-        
+
             while(true){
-        
+
                 TimeUnit.SECONDS.sleep(2);
-        
+
                 hist = histool.getHistoryById(historyid);
-        
+
                 if(histool.checkIfEnd(hist)) break;
-            
+
             }
 
         } catch (InterruptedException e) {
@@ -71,16 +71,16 @@ public class RunProcessCommand  implements Runnable {
 
         System.out.println("Execution finished");
 
-        System.out.println(String.format("Total time cost: %o seconds", 
-                           BaseTool.calculateDuration(hist.getHistory_begin_time(), hist.getHistory_end_time())));
+        System.out.printf("Total time cost: %o seconds%n",
+                           BaseTool.calculateDuration(hist.getHistory_begin_time(), hist.getHistory_end_time()));
         
         CommandLineUtil.CommandLineTable table = new CommandLineUtil.CommandLineTable();
 
         table.setHeaders(new String[] { "History Id", "Status", "Begin Time", "End Time", "Input", "Output", "Notes" });
         
-        table.addRow(new String[] {hist.getHistory_id(), hist.getIndicator().toString(), 
-            bt.formatDate(hist.getHistory_begin_time()), bt.formatDate(hist.getHistory_end_time()), 
-            hist.getHistory_input(), hist.getHistory_output(), hist.getHistory_notes()});
+        table.addRow(hist.getHistory_id(), hist.getIndicator().toString(),
+                bt.formatDate(hist.getHistory_begin_time()), bt.formatDate(hist.getHistory_end_time()),
+                hist.getHistory_input(), hist.getHistory_output(), hist.getHistory_notes());
 
         table.print();
 

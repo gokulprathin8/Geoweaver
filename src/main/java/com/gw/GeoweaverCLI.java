@@ -36,7 +36,7 @@ public class GeoweaverCLI implements CommandLineRunner {
 
 
     public void displayAllBeans() {
-        String[] allBeanNames = beantool.getApplicationContext().getBeanDefinitionNames();
+        String[] allBeanNames = BeanTool.getApplicationContext().getBeanDefinitionNames();
         for(String beanName : allBeanNames) {
             System.out.println(beanName);
         }

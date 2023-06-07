@@ -1,8 +1,9 @@
 package com.gw.commands;
 
+import com.gw.tools.HistoryTool;
 import com.gw.tools.WorkflowTool;
 import com.gw.utils.BaseTool;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.gw.utils.BeanTool;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
@@ -13,18 +14,16 @@ public class WorkflowHistory implements Runnable {
     @CommandLine.Parameters(index = "0", description = "workflow id")
     String workflowId;
 
-    @Autowired
-    WorkflowTool wt;
-
     @Override
     public void run() {
+        String resp;
+        WorkflowTool wt = BeanTool.getBean(WorkflowTool.class);
+        HistoryTool tool = BeanTool.getBean(HistoryTool.class);
         if(BaseTool.isNull(workflowId)) {
-            String resp = wt.all_active_process();
-            System.out.println(resp);
-
+            resp = wt.all_active_process();
         }else {
-            String resp = wt.all_history(workflowId);
-            System.out.println(resp);
+            resp = tool.workflow_all_history(workflowId);
         }
+        System.out.println(resp);
     }
 }

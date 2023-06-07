@@ -1,7 +1,6 @@
 package com.gw.commands;
 
 import java.io.File;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
@@ -46,12 +45,12 @@ public class ExportWorkflowCommand implements Runnable {
             
             Files.copy(new File(defaultsavefilepath).toPath(), new File(target_file_path).toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-            System.out.println(String.format("Workflow %s has been exported to file: %s", workflow_id, target_file_path));
+            System.out.printf("Workflow %s has been exported to file: %s%n", workflow_id, target_file_path);
 
         }catch(Exception e){
 
-            System.err.println(String.format("Fail to export workflow %s. Reason: %s", 
-                workflow_id, e.getLocalizedMessage()));
+            System.err.printf("Fail to export workflow %s. Reason: %s%n",
+                workflow_id, e.getLocalizedMessage());
 
         }
 

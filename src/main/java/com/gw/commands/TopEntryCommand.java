@@ -11,7 +11,8 @@ import picocli.CommandLine.HelpCommand; // Default help subcommand, displays hel
 @Component
 @Command(subcommands = { HistoryCommand.class, PasswordResetCommand.class, RunCommand.class, 
                         ListCommand.class, DetailCommand.class, HelpCommand.class, 
-                        ImportCommand.class, ExportCommand.class})
+                        ImportCommand.class, ExportCommand.class, WorkflowHistory.class,
+                         ProcessHistoryCommand.class})
 public class TopEntryCommand implements Runnable {
 
     Logger logger = Logger.getLogger(this.getClass());
