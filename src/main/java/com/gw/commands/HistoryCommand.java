@@ -32,18 +32,19 @@ public class HistoryCommand implements Runnable {
         if(hist != null && hist.getHistory_process() != null) {
 
             table.setHeaders(new String[] { "History Id", "Status", "Begin Time", "End Time", "Input", "Output", "Notes" });
-            table.addRow(new String[] {hist.getHistory_id(), hist.getIndicator().toString(), 
-                bt.formatDate(hist.getHistory_begin_time()), bt.formatDate(hist.getHistory_end_time()), 
-                hist.getHistory_input(), hist.getHistory_output(), hist.getHistory_notes()});
+            table.addRow(hist.getHistory_id(), hist.getIndicator(),
+                    bt.formatDate(hist.getHistory_begin_time()), bt.formatDate(hist.getHistory_end_time()),
+                    hist.getHistory_input(), hist.getHistory_output(), hist.getHistory_notes());
 
             table.print();
 
         }else {
 
-            System.out.println(String.format("No history found with id: %s", history_id));
+            System.out.printf("No history found with id: %s%n", history_id);
             
         }
         
     }
     
 }
+
