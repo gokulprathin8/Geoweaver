@@ -15,10 +15,13 @@ public class ProcessHistoryCommand implements Runnable {
 
     @Override
     public void run() {
+        String resp;
+        ProcessTool pt = BeanTool.getBean(ProcessTool.class);
         if (BaseTool.isNull(processId)) {
-            ProcessTool pt = BeanTool.getBean(ProcessTool.class);
-            String resp = pt.all_active_process();
-            System.out.print(resp);
+            resp = pt.all_active_process();
+        } else {
+            resp = pt.all_history(processId);
         }
+        System.out.print(resp);
     }
 }
