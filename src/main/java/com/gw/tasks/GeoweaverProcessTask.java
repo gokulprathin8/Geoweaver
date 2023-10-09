@@ -355,11 +355,13 @@ public class GeoweaverProcessTask  extends Task {
 					wf.setIndicator(workflow_status);
 				}
 				if (errorcheck == 1) {
+					tm.done(this);
+					workflow_status = ExecutionStatus.STOPPED;
 					hist.saveHistory(wf);
 					this.history_end_time = BaseTool.getCurrentSQLDate();
 					wf.setHistory_end_time(this.history_begin_time);
 					sendMessage2WorkflowWebsocket("{\"workflow_status\": \"completed\", \"workflow_history_id\": \"" + workflow_history_id + "\"}");
-					return;
+					stopMonitor();
 				}
 
 				//update workflow status
