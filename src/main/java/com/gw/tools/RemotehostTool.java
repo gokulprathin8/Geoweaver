@@ -398,6 +398,7 @@ public class RemotehostTool {
 			//get code of the process
 			
 			String code = pt.getCodeById(id);
+			System.out.println(code);
 
 			this.saveHistory(id, code, history_id);
 			
