@@ -105,7 +105,6 @@ public class Worker extends Thread{
 					unloadTask();
 					System.out.println(executionStatus);
                     if (Objects.equals(executionStatus, ExecutionStatus.FAILED)) {
-						System.out.println("goes here xvf");
 						running = false;
 						t.failureCallback(new Exception("Failed to execute process."));
 					}

@@ -22,7 +22,7 @@ import org.apache.tomcat.websocket.WsSession;
  * @author JensenSun
  *
  */
-//ws://localhost:8080/Geoweaver/jupyter-socket/api/kernels/884447f1-bac6-4913-be86-99da11b2a78a/channels?session_id=42b8261488884e869213604975141d8c
+
 @ServerEndpoint(value = "/workflow-socket")
 public class WorkflowServlet {
 	
@@ -41,7 +41,6 @@ public class WorkflowServlet {
 			logger.debug("Workflow-Socket websocket channel openned");
 		} catch (Exception e) {
 			e.printStackTrace();
-			
 		}
 		
     }
@@ -68,11 +67,9 @@ public class WorkflowServlet {
     		
 			logger.debug("Received message: " + message);
 
-
-			if(message.indexOf("token:")!=-1){
+			if(message.contains("token:")){
 
 				message = message.substring(6);
-
 				this.registerSession(session, message);
 
 			}

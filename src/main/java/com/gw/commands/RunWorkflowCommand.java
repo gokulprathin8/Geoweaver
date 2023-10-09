@@ -102,7 +102,7 @@ public class RunWorkflowCommand  implements Runnable {
                 String wid = String.valueOf(map.get("id"));
                 System.out.printf("Workflow ID: %s", wid);
 
-                //import the workflow and save to database
+                //import the zworkflow and save to database
                 resp = wt.saveWorkflowFromFolder(wid, filename);
                 System.out.println("Successfully saved to database. Complete.");
 

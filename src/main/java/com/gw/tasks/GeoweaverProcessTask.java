@@ -2,6 +2,7 @@ package com.gw.tasks;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.websocket.Session;
 
@@ -332,7 +333,7 @@ public class GeoweaverProcessTask  extends Task {
 					obj.put("id", member_process_id_list[i]);
 
 					obj.put("history_id", c_history_id);
-					
+
 					obj.put("status", c_his.getIndicator());
 
 					if(BaseTool.isNull(c_his.getIndicator()) 
@@ -345,17 +346,21 @@ public class GeoweaverProcessTask  extends Task {
 						}
 					
 					array.add(obj);
-					
 				}
 
-
-//				monitor.sendMessage(new TextMessage(array.toJSONString()));
 				sendMessage2WorkflowWebsocket(array.toJSONString());
 
 				if(errorcheck==1 && ExecutionStatus.DONE.equals(workflow_status)){
-
 					workflow_status = ExecutionStatus.FAILED;
-
+					wf.setIndicator(workflow_status);
+				}
+				if (errorcheck == 1) {
+					hist.saveHistory(wf);
+					this.history_end_time = BaseTool.getCurrentSQLDate();
+					wf.setHistory_end_time(this.history_begin_time);
+					sendMessage2WorkflowWebsocket("{\"workflow_status\": \"completed\", \"workflow_history_id\": \"" + workflow_history_id + "\"}");
+					updateEverything();
+					return;
 				}
 
 				//update workflow status
@@ -370,8 +375,6 @@ public class GeoweaverProcessTask  extends Task {
 					|| ExecutionStatus.SKIPPED.equals(workflow_status)){
 					sendMessage2WorkflowWebsocket("{\"workflow_status\": \"completed\", \"workflow_history_id\": \""+workflow_history_id+"\"}");
 				}
-				
-				
 			}
 			
 		} catch (Exception e) {

@@ -2,11 +2,7 @@ package com.gw.tasks;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.websocket.Session;
 
@@ -158,10 +154,10 @@ public class GeoweaverWorkflowTask{
 		hist.saveHistory(history);
     	
 	}
-	
+
 	/**
 	 * Start the monitoring of the task
-	 * @param socketsession
+	 * @param token
 	 */
 	public void startMonitor(String token) {
 		
@@ -215,7 +211,7 @@ public class GeoweaverWorkflowTask{
 
 					obj.put("history_id", history_id);
 					
-					obj.put("status", flags[i].toString());
+					obj.put("status", flags[i]);
 					
 					array.add(obj);
 					
@@ -224,7 +220,6 @@ public class GeoweaverWorkflowTask{
 				log.debug("Send workflow process status back to the client: " + array);
 				
 				monitor.getBasicRemote().sendText(array.toJSONString());
-				
 			}
 			
 		} catch (Exception e) {
@@ -234,6 +229,7 @@ public class GeoweaverWorkflowTask{
 		}
 		
 	}
+
 	
 	/**
 	 * Stop the monitoring of the task
@@ -271,25 +267,23 @@ public class GeoweaverWorkflowTask{
 			String current_history_id = (String)((JSONObject)nodes.get(i)).get("history_id");
 			
 			List preids = new ArrayList();
-			
-			for(int j=0;j<edges.size();j++) {
-				
-				JSONObject eobj = (JSONObject)edges.get(j);
-				
-				String sourceid = (String)((JSONObject)eobj.get("source")).get("id");
-				
-				String targetid = (String)((JSONObject)eobj.get("target")).get("id");
-				
-				if(current_id.equals(targetid)) {
 
-					preids.add(getNodeByID(nodes, sourceid).get("history_id"));
-					
-					// preids.add(sourceid);
-					
-				}
-				
-				
-			}
+            for (Object edge : edges) {
+
+                JSONObject eobj = (JSONObject) edge;
+
+                String sourceid = (String) ((JSONObject) eobj.get("source")).get("id");
+
+                String targetid = (String) ((JSONObject) eobj.get("target")).get("id");
+
+                if (current_id.equals(targetid)) {
+
+                    preids.add(getNodeByID(nodes, sourceid).get("history_id"));
+
+                }
+
+
+            }
 
 			node2condition.put(current_history_id, preids);
 			
@@ -303,18 +297,18 @@ public class GeoweaverWorkflowTask{
 
 		JSONObject theobj = null;
 
-		for(int i=0;i<nodes.size();i++){
+        for (Object node : nodes) {
 
-			String current_id = (String)((JSONObject)nodes.get(i)).get("id");
+            String current_id = (String) ((JSONObject) node).get("id");
 
-			if(current_id.equals(id)){
+            if (current_id.equals(id)) {
 
-				theobj = (JSONObject)nodes.get(i);
-				break;
+                theobj = (JSONObject) node;
+                break;
 
-			}
+            }
 
-		}
+        }
 
 		return theobj;
 
@@ -375,17 +369,13 @@ public class GeoweaverWorkflowTask{
 			JSONArray nodes = (JSONArray)parser.parse(w.getNodes());
 			
 			String[] flags = new String[nodes.size()];
-			
-			for(int i=0;i<flags.length; i++ ) {
-				
-				flags [i] = ExecutionStatus.READY;
-				
-			}
 
-			for(int i=0;i<nodes.size();i++){
+            Arrays.fill(flags, ExecutionStatus.READY);
 
-				((JSONObject)nodes.get(i)).put("history_id", new RandomString(11).nextString()); //generate history id before call the execution function
-			}
+            for (Object node : nodes) {
+
+                ((JSONObject) node).put("history_id", new RandomString(11).nextString()); //generate history id before call the execution function
+            }
 
 			// set the status of workflow history
 			this.history_indicator = ExecutionStatus.READY;
@@ -415,18 +405,6 @@ public class GeoweaverWorkflowTask{
 				String password = mode.equals("one")?pswds[0]:pswds[i];
 
 				String envid = mode.equals("one")?envs[0]:envs[i];
-				
-				//nodes
-//				[{"title":"download-landsat","id":"nhi96d-7VZhh","x":119,"y":279},
-// {"title":"filter_cloud","id":"rh1u8q-4sCmg","x":286,"y":148},
-// {"title":"filter_shadow","id":"rpnhlg-JZfyQ","x":455,"y":282},
-// {"title":"match_cdl_landsat","id":"omop8l-1p5x1","x":624,"y":152}]
-				
-				//edges
-//				[{"source":{"title":"sleep5s","id":"ac4724-jL0Ep","x":342.67081451416016,"y":268.8715720176697},
-// "target":{"title":"testbash","id":"199vsg-Xr6FZ","x":465.2892303466797,"y":41.6651611328125}},
-// {"source":{"title":"testbash","id":"199vsg-oAq2d","x":-7.481706619262695,"y":180.70700073242188},
-// "target":{"title":"sleep5s","id":"ac4724-jL0Ep","x":342.67081451416016,"y":268.8715720176697}}]
 				
 				try {
 
