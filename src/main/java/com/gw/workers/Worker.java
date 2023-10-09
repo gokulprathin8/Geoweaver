@@ -98,15 +98,9 @@ public class Worker extends Thread{
 			while(running) {
 				
 				if(this.t!=null) {
-					
-//					System.out.println("=== task loaded");
-					
 					t.execute();
-			    	
 					t.responseCallback();
-					
 					unloadTask();
-					
 				}
 		        
 		        if (Thread.interrupted() || is_temp) {
@@ -114,11 +108,7 @@ public class Worker extends Thread{
 		        	running = false;
 		        }
 		        
-//		        System.out.println("---thread " + name + " starts to wait");
-		        
 		        TimeUnit.SECONDS.sleep(1);
-		        
-//		        wait(); //wait until notify is called
 		    }
 			
 		} catch (Exception e) {

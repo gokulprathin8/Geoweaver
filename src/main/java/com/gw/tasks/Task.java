@@ -3,7 +3,6 @@ package com.gw.tasks;
 
 import javax.websocket.Session;
 
-import org.springframework.web.socket.WebSocketSession;
 
 /**
  *Class Task.java
