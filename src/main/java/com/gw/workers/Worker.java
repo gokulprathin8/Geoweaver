@@ -1,7 +1,9 @@
 package com.gw.workers;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+import com.gw.jpa.ExecutionStatus;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -98,9 +100,15 @@ public class Worker extends Thread{
 			while(running) {
 				
 				if(this.t!=null) {
-					t.execute();
+					String executionStatus = t.execute();
 					t.responseCallback();
 					unloadTask();
+					System.out.println(executionStatus);
+                    if (Objects.equals(executionStatus, ExecutionStatus.FAILED)) {
+						System.out.println("goes here xvf");
+						running = false;
+						t.failureCallback(new Exception("Failed to execute process."));
+					}
 				}
 		        
 		        if (Thread.interrupted() || is_temp) {

@@ -38,15 +38,7 @@ public class WorkflowServlet {
     public void open(Session session, EndpointConfig config) {
 		
 		try {
-			
 			logger.debug("Workflow-Socket websocket channel openned");
-			
-			// this.wsSession = session;
-
-			// session.setMaxIdleTimeout(0);
-
-			// this.registerSession(session);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			
@@ -55,33 +47,9 @@ public class WorkflowServlet {
     }
 
 	public void registerSession(Session session, String token){
-
-
 		WsSession wss = (WsSession) session;
-			
 		logger.debug("Web Socket Session ID:" + wss.getHttpSessionId());
-
-		// List<String> originHeader = (List<String>)session.getUserProperties()
-		// .get("TheUpgradeOrigin");
-
-		// if(wss.getHttpSessionId()==null){
-		// 	throw new RuntimeException("The HTTP Session ID shouldn't be null.");
-		// }else{
-
-			// logger.debug("Websocket original headers: " + originHeader);
-
-			// Session existingsession = WorkflowServlet.findSessionByToken(wss.getHttpSessionId());
-
-			// if(existingsession==null || !existingsession.isOpen()){
-
-			// peers.put(wss.getHttpSessionId(), session);
-
-			// }
-		// }
-
 		peers.put(token, session);
-
-
 	}
 
     @OnError
@@ -109,24 +77,7 @@ public class WorkflowServlet {
 
 			}
 			
-			session.getBasicRemote().sendText("Session_Status:Active"); 
-
-			// String received = session.getQueryString();
-        	
-			// if(message!=null && message.startsWith("token:")){
-
-			// 	message = message.substring(6);
-
-			// 	logger.debug(" - Token: " + message);
-
-			// 	WsSession wss = (WsSession) session;
-				
-			// 	logger.debug("Web Socket Session ID:" + wss.getHttpSessionId());
-				
-			// 	peers.put(message, session);
-
-			// }
-
+			session.getBasicRemote().sendText("Session_Status:Active");
         	
     	}catch(Exception e) {
     		

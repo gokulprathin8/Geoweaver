@@ -17,8 +17,10 @@ public abstract class Task{
 	public abstract void initialize();
 	/**
 	 * Execute the task
+	 *
+	 * @return
 	 */
-	public abstract void execute();
+	public abstract String execute();
 	/**
 	 * Call back function
 	 * Return the execution results

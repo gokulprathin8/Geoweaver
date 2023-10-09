@@ -1,9 +1,7 @@
 package com.gw.tasks;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.websocket.Session;
 
@@ -17,7 +15,6 @@ import com.gw.tools.HostTool;
 import com.gw.tools.ProcessTool;
 import com.gw.tools.ExecutionTool;
 import com.gw.utils.BaseTool;
-import com.gw.utils.RandomString;
 
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
@@ -247,24 +244,9 @@ public class GeoweaverProcessTask  extends Task {
 	 * Stop the monitoring of the task
 	 */
 	public void stopMonitor() {
-		
 		//no closing anymore, the websocket session between client and server should be always active
 		this.monitor = null;
 		this.workflow_monitor = null;
-		
-//		try {
-//			
-//			logger.info("close the websocket session from server side");
-//			
-////			if(!BaseTool.isNull(monitor))
-////				monitor.close();
-//			
-//		} catch (IOException e) {
-//			
-//			e.printStackTrace();
-//			
-//		}
-		
 	}
 
 	@Override
@@ -274,11 +256,11 @@ public class GeoweaverProcessTask  extends Task {
 	}
 
 	@Override
-	public void execute() {
+	public String execute() {
 
 		logger.debug(" + + + start Geoweaver Process " + pid );
 
-		System.out.println("> Start to run process: "+ pid);
+		System.out.println("> Running process: "+ pid);
 		
 		try {
 
@@ -306,22 +288,21 @@ public class GeoweaverProcessTask  extends Task {
 			
 			this.history_output = e.getLocalizedMessage();
 
+			return this.curstatus;
+
 			
 		}finally {
 			
 			if(!isjoin) this.stopMonitor(); //if run solo, close. if workflow, don't.
-			
 		}
-		
+
 		System.out.printf("> Finished process: %s - history: %s - Status: %s%n", pid, history_id, this.curstatus);
+		return this.curstatus;
 	}
 
 	/**
 	 * Send all tasks' status of the same workflow
-	 * @param id
-	 * @param history_id
-	 * @param flag
-	 */
+     */
 	public void sendAllTaskStatus(){
 
 		try {
@@ -494,14 +475,6 @@ public class GeoweaverProcessTask  extends Task {
 		this.updateEverything();
 
 		tm.done(this);
-		
-		//this is optional to avoid thread conflict
-		// sendMessage2LogoutWebsocket("Process " + pid + " - History ID - " + history_id + " finished.");
-		
-		//notify the task list observer
-		// setChanged();
-		// notifyObservers(this);
-		
 	}
 
 	void sendMessage2WorkflowWebsocket(String msg){
