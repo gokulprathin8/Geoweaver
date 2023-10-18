@@ -41,17 +41,20 @@ jobs:
       with:
         name: geoweaver-artifacts
 
+    - name: Extract Branch/Tag Name
+      run: echo "REF_NAME=$(echo ${GITHUB_REF#refs/*/} | sed 's/\//_/g')" >> $GITHUB_ENV
+
     - name: Create GitHub Release
       id: create_release
       uses: actions/create-release@v1
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        tag_name: ${{ env.REF_NAME }}
+        release_name: Release ${{ env.REF_NAME }}
         body: Description of the release
         draft: false
         prerelease: false
       env:
-        GITHUB_TOKEN: ${{ secrets.GH_PAT }}  # Use your PAT here
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
     - name: Upload WAR Asset
       uses: actions/upload-release-asset@v1
