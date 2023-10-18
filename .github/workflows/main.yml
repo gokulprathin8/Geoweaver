@@ -52,12 +52,16 @@ jobs:
         fi
       shell: bash
 
+    - name: Set Release Name
+      id: set_release_name
+      run: echo "RELEASE_NAME=Released at $(date +\%Y-\%m-\%d)" >> $GITHUB_ENV
+
     - name: Create GitHub Release
       id: create_release
       uses: actions/create-release@v1
       with:
         tag_name: ${{ env.TAG_NAME }}
-        release_name: "Released at $(date +\%Y-\%m-\%d)"
+        release_name: ${{ env.RELEASE_NAME }}
         body: Description of the release
         draft: false
         prerelease: false
