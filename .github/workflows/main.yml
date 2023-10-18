@@ -45,8 +45,8 @@ jobs:
     - name: Determine Tag Name
       id: determine_tag_name
       run: |
-        if [[ -n "${{ github.ref }}" && ${{ github.ref }} == refs/tags/* ]]; then
-          echo "TAG_NAME=${{ github.ref/refs\/tags\// }}" >> $GITHUB_ENV
+        if [[ -n "${{ github.ref }}" && "${{ github.ref }}" == refs/tags/* ]]; then
+          echo "TAG_NAME=$(echo "${{ github.ref }}" | sed 's@refs/tags/@@')" >> $GITHUB_ENV
         else
           echo "TAG_NAME=default-tag-name" >> $GITHUB_ENV
         fi
