@@ -27,9 +27,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: geoweaver-artifacts
-        path: |
-          target/*.war
-          target/*.jar
+        path: target/*.jar
 
   release:
     needs: build
@@ -55,14 +53,6 @@ jobs:
         prerelease: false
       env:
         GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-
-    - name: Upload WAR Asset
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./geoweaver-artifacts/geoweaver.war
-        asset_name: geoweaver.war
-        asset_content_type: application/zip
 
     - name: Upload JAR Asset
       uses: actions/upload-release-asset@v1
