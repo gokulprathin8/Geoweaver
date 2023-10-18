@@ -42,12 +42,22 @@ jobs:
     - name: Extract Commit Message
       run: echo "COMMIT_MESSAGE=$(git log --format=%B -n 1 ${{ github.sha }})" >> $GITHUB_ENV
 
+    - name: Determine Tag Name
+      id: determine_tag_name
+      run: |
+        if [[ -n "${{ github.ref }}" && "${{ github.ref }}" == "refs/tags/"* ]]; then
+          echo "TAG_NAME=${{ github.ref#refs/tags/ }}" >> $GITHUB_ENV
+        else
+          echo "TAG_NAME=default-tag-name" >> $GITHUB_ENV
+        fi
+      shell: bash
+
     - name: Create GitHub Release
       id: create_release
       uses: actions/create-release@v1
       with:
-        tag_name: ${{ env.COMMIT_MESSAGE }}
-        release_name: Release based on ${{ env.COMMIT_MESSAGE }}
+        tag_name: ${{ env.TAG_NAME }}
+        release_name: "Released at $(date +\%Y-\%m-\%d)"
         body: Description of the release
         draft: false
         prerelease: false
