@@ -39,15 +39,15 @@ jobs:
       with:
         name: geoweaver-artifacts
 
-    - name: Extract Branch/Tag Name
-      run: echo "REF_NAME=$(echo ${GITHUB_REF#refs/*/} | sed 's/\//_/g')" >> $GITHUB_ENV
+    - name: Extract Commit Message
+      run: echo "COMMIT_MESSAGE=$(git log --format=%B -n 1 ${{ github.sha }})" >> $GITHUB_ENV
 
     - name: Create GitHub Release
       id: create_release
       uses: actions/create-release@v1
       with:
-        tag_name: ${{ env.REF_NAME }}
-        release_name: Release ${{ env.REF_NAME }}
+        tag_name: ${{ env.COMMIT_MESSAGE }}
+        release_name: Release based on ${{ env.COMMIT_MESSAGE }}
         body: Description of the release
         draft: false
         prerelease: false
