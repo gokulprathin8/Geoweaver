@@ -961,40 +961,29 @@ public class WorkflowTool {
 				workflowJsonPath.lastIndexOf("workflow.json"));
 
 		String workflowjson = bt.readStringFromFile(workflowJsonPath);
-
 		String codefolder = workflowFolderPath + "code" + FileSystems.getDefault().getSeparator();
-
 		String historyfolder = workflowFolderPath + "history" + FileSystems.getDefault().getSeparator();
 
 		// save workflow
 		Workflow w = this.fromJSON(workflowjson);
-
 		this.save(w);
 
-		// save history
+		List<History> historyList = new ArrayList<>();
 		File[] files = new File(historyfolder).listFiles();
-
 		if (files != null) {
-
 			for (File file : files) {
-
 				String historyjson = bt.readStringFromFile(file.getAbsolutePath());
-
 				JSONArray historyarray = (JSONArray) jsonparser.parse(historyjson);
 
 				historyarray.forEach((obj) -> {
-
 					String jsonobj = ((JSONObject) obj).toJSONString();
-
 					History hist = historyFromJSON(jsonobj);
-
-					historyrepository.save(hist);
-					// historyrepository.saveJSON(jsonobj);
+					historyList.add(hist);
 				});
-
 			}
-
 		}
+
+		historyrepository.saveAll(historyList);
 
 		// save process
 		String processjson = bt.readStringFromFile(codefolder + "process.json");
