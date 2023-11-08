@@ -30,6 +30,8 @@ GW.ssh = {
     	token : null,
     	
     	output_div_id: null,
+
+		process_output_id: "process-log-window",
 	    
 	    ws: null,
 	    
@@ -66,12 +68,6 @@ GW.ssh = {
 	    echo: function(content){
 		
 			if(content!=null){
-
-				// if(content.indexOf("Warning: Websocket Channel is going to close")!=-1){
-
-				// 	console.error("The WebSocket is going to close..");
-
-				// }
 				
 		    	content = content.replace(/\n/g,'<br/>')
 		    	
@@ -124,8 +120,6 @@ GW.ssh = {
 	    	
 	    	content = content.replace(/\n/g,'<br/>')
 	    	
-//	    	$("#"+this.output_div_id).append("<p style=\"color:red;text-align: left; \">"+content+"</p>"); //show all the ssh output
-	    	
 	    	this.addlog(content);
 	    	
 	    },
@@ -170,18 +164,12 @@ GW.ssh = {
 		},
 	    
 	    ws_onopen: function (e) {
-	    	
-	      //open the indicator
-//	      GW.monitor.openWorkspaceIndicator();
-	      
-	      //shell.echo(special.white + "connected" + special.reset);
-		  console.log("WebSocket Channel is Openned");
-	      this.echo("connected");
+			
+		  	console.log("WebSocket Channel is Openned");
+	      	
+			this.echo("connected");
 
-		  setTimeout(() => {  GW.ssh.send("token:" + GW.general.CLIENT_TOKEN) }, 1000); //create a chance for the server side to register the session if it didn't when it is openned
-	      // link the SSH session established with spring security logon to the websocket session...
-	    //   this.send("token:" + this.token);
-	      
+			setTimeout(() => {  GW.ssh.send("token:" + GW.general.CLIENT_TOKEN) }, 1000); //create a chance for the server side to register the session if it didn't when it is openned
 	      
 	    },
 	    
@@ -190,24 +178,12 @@ GW.ssh = {
 	    	
 	        try{
 
-//	        	GW.monitor.closeWorkspaceIndicator();
-	        	
 	        	this.echo("disconnected");
 
 				GW.ssh.all_ws = null;
 				GW.ssh.ws = null;
 				GW.ssh.token = null;
 	        	
-//	        	this.echo("Try to reconnecting..");
-//	        	
-//	        	this.startLogSocket(GW.ssh.token)
-//	        	
-//	        	this.echo("Reconnected..")
-	        	
-//	        	this.destroy();
-//	            
-//	        	this.purge();
-	            
 	        }catch(e){
 	        	
 	        	console.error(e);
@@ -217,9 +193,7 @@ GW.ssh = {
 	        }
 	        
 	        console.log("the logging out websocket has been closed");
-	        //trigger the event to close the dialog
-	        
-//	    	document.forms['logout'].submit();
+
 	    },
 
 	    ws_onerror: function (e) {
@@ -295,8 +269,9 @@ GW.ssh = {
 				$(".dot-flashing").addClass("invisible")
 			}
 			
-			var newline = "<p style=\"line-height:1.1; text-align:left;\"><span style=\""+
-				style1+"\">" + content + "</span></p>";
+			var newline = `<p style="line-height:1.1; text-align:left; margin-top: 10px; `+
+				`margin-bottom: 10px;"><span style="`+
+				style1+ `">` + content + `</span></p>`;
 
 			this.current_log_length += 1  //line number plus 1
 
@@ -310,17 +285,17 @@ GW.ssh = {
 			//don't output log to process log if the current executed is workflow
 			if(GW.process.last_executed_process_id==GW.process.process_id){
 
-				if($("#process-log-window").length && GW.workspace.currentmode == 1){
+				if($("#"+GW.ssh.process_output_id).length && GW.workspace.currentmode == 1){
 				
 					if(this.current_process_log_length > 5000){
 			
-						$("#process-log-window").find('p:first').remove();
+						$("#"+GW.ssh.process_output_id).find('p:first').remove();
 			
 						this.current_process_log_length -= 1
 			
 					}
 			
-					$("#process-log-window").append(newline);
+					$("#"+GW.ssh.process_output_id).append(newline);
 			
 					this.current_process_log_length += 1
 					
@@ -333,7 +308,7 @@ GW.ssh = {
 
 		clearProcessLog: function(){
 
-			$("#process-log-window").html("");
+			$("#"+GW.ssh.process_output_id).html("");
 
 		},
 
@@ -405,13 +380,6 @@ GW.ssh = {
 			
 			}
 			
-//			$("#log-window").slideToggle(true);
-//			switchTab(document.getElementById("main-console-tab"), "main-console");
-			// GW.general.switchTab("console");
-
-			// this.send("history_id:" + msg.history_id);
-
-			// this.send("token:" + msg.token); //the websocket is still in connecting state
 			if(msg.history_id.length==12)
 				this.addlog("=======\nStart to execute Process " + msg.history_id);
 			else
@@ -420,24 +388,6 @@ GW.ssh = {
 	    },
 	    
 	    openTerminal: function(token, terminal_div_id){
-	    	
-//	        shell = $('#content').terminal(function (command, term) {
-//	        		
-//	        		send(command);
-//	        		
-//	            }, {
-//	            	
-//	                prompt: '['+user+'@'+host+': ~]# ',
-//	                
-//	                name: 'Geoweaver SSH on Web',
-//	                
-//	                scrollOnEcho: true,
-//	                
-//	                greetings: "SSH on Web started. Type 'exit' to quit. \nThis system is funded by National Science Foundation (https://nsf.gov)."
-//	                
-//	            }
-//	            
-//	        );
 	    	
 	    }
 		

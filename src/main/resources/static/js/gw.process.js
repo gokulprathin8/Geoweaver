@@ -990,8 +990,6 @@ GW.process = {
 
 		}
 		
-		// output = "<h4 class=\"border-bottom\">Output Log Section <button type=\"button\" class=\"btn btn-secondary btn-sm\" id=\"closeLog\">Close</button></h4>"+
-		
 		output = "<p> Execution started at " + msg.begin_time + "</p>"+ 
 		
 		"<p> Execution ended at " + msg.end_time + "</p>"+
@@ -1002,7 +1000,6 @@ GW.process = {
 		
 		output + "</div>";
 		
-		// $("#console-output").html(output);
 		$("#process-log-window").html(output);
 		
 		$("#closeLog").click(function(){
@@ -1391,7 +1388,7 @@ GW.process = {
 		   '   </div>'+
 		   '   <div class="form-group row" style="padding-left:10px;padding-right:10px; margin:0px;" >'+
 		   '	     <div class="col-md-6" style="padding:0;" >'+
-		   '			<p class=\"h6\"> <span class=\"badge badge-secondary\">Ctrl+S</span> to save edits. Click <i class=\"fa fa-edit subalignicon\" onclick=\"GW.process.editSwitch()\" data-toggle=\"tooltip\" title=\"Enable Edit\"></i> to enable edit.'+
+		   '			<p class=\"h6\"> <span class=\"badge badge-secondary\">Ctrl+S</span> to save. Click <i class=\"fa fa-edit subalignicon\" onclick=\"GW.process.editSwitch()\" data-toggle=\"tooltip\" title=\"Enable Edit\"></i> to edit.'+
 		   '				<label class="text-primary" style="margin-left:5px;" for="log_switch">Log</label>'+
 		   '				<input type="checkbox" style="margin-left:5px;" checked id="log_switch">'+
 		   ' 				<button type="button" class="btn btn-secondary btn-sm" id="showCurrent">Latest Code</button>'+  
@@ -1710,7 +1707,7 @@ GW.process = {
 							onclick="var event = arguments[0] || window.event; event.stopPropagation();
 							GW.menu.details('${one.id}', 'process')">
 							<div class="row bare-window">
-								<div class="col-md-2 bare-window" style="overflow: hidden; text-overflow: ellipsis; width: 180px" title="${one.name}"><span>&nbsp;&nbsp;&nbsp;${one.name}</span></div>
+								<div class="col-md-8 bare-window" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;" title="${one.name}"><span>&nbsp;&nbsp;&nbsp;${one.name}</span></div>
 								<div class="col-md-4 bare-window">
 									<button type="button" class="btn btn-warning btn-xs pull-right right-button-vertical-center" 
 									onclick="var event = arguments[0] || window.event; event.stopPropagation();
@@ -1820,56 +1817,55 @@ GW.process = {
 		
 		var req =  {
 				
-				type: "process", 
-				
-				lang: plang,
-				
-				desc: pdesc, //use the description column to store the process type
+			type: "process", 
 			
-				name: pname, 
-				
-				id: pid,
+			lang: plang,
+			
+			desc: pdesc, //use the description column to store the process type
+		
+			name: pname, 
+			
+			id: pid,
 
-				owner: GW.user.current_userid,
+			owner: GW.user.current_userid,
 
-				confidential: confidential,
-				
-				code: pcode
-				
+			confidential: confidential,
+			
+			code: pcode
+			
 		};
 		
-			$.ajax({
-				
-				url: "edit/process",
-				
-				method: "POST",
-				
-				contentType: 'application/json',
+		$.ajax({
+			
+			url: "edit/process",
+			
+			method: "POST",
+			
+			contentType: 'application/json',
 
-				dataType: 'json',
-				
-				data: JSON.stringify(req)
-				
-			}).done(function(msg){
-				
-				msg = GW.general.parseResponse(msg);
-				
-				console.log("Updated!!");
-				
-				GW.general.showToasts("Code updated.");
-				
-				console.log("If the process name is changed, the item in the menu should be changed at the same time. ");
-				
-				GW.process.refreshProcessList();
+			dataType: 'json',
+			
+			data: JSON.stringify(req)
+			
+		}).done(function(msg){
+			
+			msg = GW.general.parseResponse(msg);
+			
+			console.log("Updated!!");
+			
+			GW.general.showToasts("Code updated.");
+			
+			console.log("If the process name is changed, the item in the menu should be changed at the same time. ");
+			
+			GW.process.refreshProcessList();
 
-				GW.process.showSaved();
-				
-			}).fail(function(jqXHR, textStatus){
-				
-				alert("Fail to update the process.");
-				
-			});
-		
+			GW.process.showSaved();
+			
+		}).fail(function(jqXHR, textStatus){
+			
+			alert("Fail to update the process.");
+			
+		});
 			
 	},
 	
@@ -1991,6 +1987,7 @@ GW.process = {
 		if($("#process-log-window").length){
 
 			$("#process-log-window").html("");
+
 			GW.ssh.current_process_log_length = 0;
 
 		}
@@ -2033,6 +2030,8 @@ GW.process = {
 
 		req.history_id = newhistid;
 
+		console.log("current client token is: " + GW.general.CLIENT_TOKEN)
+
 		req.token = GW.general.CLIENT_TOKEN;
 
 		req.operation = "ShowResultMap";
@@ -2063,14 +2062,6 @@ GW.process = {
 					
 					console.log("history id: " + msg.history_id);
 					
-					// GW.process.showSSHOutputLog(msg);
-
-//						if(req.desc == "builtin"){
-//							
-//							GW.monitor.startMonitor(msg.history_id); //"builtin" operation like Show() might need post action in the client
-//							
-//						}
-					
 				}else if(msg.ret == "fail"){
 					
 					alert("Fail to execute the process.");
@@ -2078,8 +2069,6 @@ GW.process = {
 					console.error("fail to execute the process " + msg.reason);
 					
 				}
-				
-//					if(dialog) dialog.close();
 				
 				if(dialog) {
 					
@@ -2109,6 +2098,8 @@ GW.process = {
 	executeCallback: function(encrypt, req, dialogItself, button){
 		
 		req.pswd = encrypt;
+
+		GW.ssh.process_output_id = "process-log-window"
 		
 		GW.process.sendExecuteRequest(req, dialogItself, button);
 		
@@ -2117,7 +2108,13 @@ GW.process = {
 	/**
 	 * This function is to directly execute one process
 	 */
-	executeProcess: function(pid, hid, lang){
+	executeProcess: function(pid, hid, lang, callback_func){
+
+		if(callback_func == null){
+
+			callback_func = GW.process.executeCallback
+		
+		}
 		
 		var req = {
 			
@@ -2141,7 +2138,7 @@ GW.process = {
 				
 				req.env = cached_env;
 				
-				GW.host.start_auth_single(hid, req, GW.process.executeCallback );
+				GW.host.start_auth_single(hid, req, callback_func);
 				
 			}else{
 				
@@ -2287,7 +2284,7 @@ GW.process = {
 							
 						}
 						
-						GW.host.start_auth_single(hid, req, GW.process.executeCallback );
+						GW.host.start_auth_single(hid, req, callback_func );
 						
 						GW.process.env_frame.closeFrame();
 						
@@ -2310,7 +2307,7 @@ GW.process = {
 			
 		}else{
 			
-			GW.host.start_auth_single(hid, req, GW.process.executeCallback );
+			GW.host.start_auth_single(hid, req, callback_func );
 			
 		}
 		
@@ -2322,9 +2319,9 @@ GW.process = {
 	 * @param {*} pname 
 	 * @param {*} lang 
 	 */
-	runProcess: function(pid, pname, lang){
+	runProcess: function(pid, pname, lang, callback_func){
 
-		if(!this.isSaved){
+		if(!GW.process.isSaved){
 
 			if(confirm("You have non-saved changes in this process. Do you want to continue?")){
 
@@ -2335,10 +2332,14 @@ GW.process = {
 				return;
 
 			}
+			
+		}
 
+		if(callback_func==null){
+			callback_func = GW.process.executeCallback
 		}
 		
-		var h = this.findCache(pid);
+		var h = GW.process.findCache(pid);
 		
 		if(h==null){
 			
@@ -2439,7 +2440,7 @@ GW.process = {
 					
 				}
 				
-				GW.process.executeProcess(pid, hostid, lang);
+				GW.process.executeProcess(pid, hostid, lang, callback_func);
 				
 				GW.process.host_frame.closeFrame();
 				
@@ -2453,7 +2454,7 @@ GW.process = {
 			
 		}else{
 			
-			GW.process.executeProcess(pid, h, lang);
+			GW.process.executeProcess(pid, h, lang, callback_func);
 			
 		}
 		

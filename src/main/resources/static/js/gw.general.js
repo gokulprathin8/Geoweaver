@@ -18,6 +18,9 @@ GW.general = {
 						case 's':
 							//need to check if the current page to call the correct method
 							event.preventDefault();
+							// // clean the search bar. Every save will reset the search input bar.
+							if(GW.search.keywords != "")
+								$("#clean_search_field").click();
 							GW.host.editSwitch();
 							GW.process.editSwitch();
 							GW.process.sidepanel.editSwitch()
@@ -29,6 +32,8 @@ GW.general = {
 			});
 
 			GW.general.CLIENT_TOKEN = GW.general.makeid(26);
+
+			console.log("created new client token: " + GW.general.CLIENT_TOKEN)
 			
 		},
 
