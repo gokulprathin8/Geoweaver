@@ -1,5 +1,7 @@
 package com.gw.utils;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -45,6 +47,11 @@ public class CommandLineUtil {
                 
             }
             System.out.println();
+        }
+
+        public static String getTextSafe(JsonNode node, String fieldName) {
+            JsonNode childNode = node.get(fieldName);
+            return childNode != null ? childNode.asText("") : "";
         }
 
         public void print() {
