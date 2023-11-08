@@ -49,7 +49,7 @@ public class HistoryCommand implements Runnable {
             // Add a row with history details to the table.
             table.addRow(new String[] {
                 hist.getHistory_id(),
-                hist.getIndicator().toString(),
+                    hist.getIndicator(),
                 bt.formatDate(hist.getHistory_begin_time()),
                 bt.formatDate(hist.getHistory_end_time()),
                 hist.getHistory_input(),
@@ -61,7 +61,7 @@ public class HistoryCommand implements Runnable {
             table.print();
         } else {
             // If no history record was found, display an error message.
-            System.out.println(String.format("No history found with ID: %s", history_id));
+            System.out.printf("No history found with ID: %s%n", history_id);
         }
 
     }
