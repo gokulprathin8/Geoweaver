@@ -155,6 +155,7 @@ GW.workflow = {
 		"	<button class=\"tablinks-workflow \" id=\"main-workflow-info-history-tab\" onclick=\"GW.workflow.openCity(event, 'main-workflow-info-history'); GW.workflow.history('"+
 		
 		workFlowID+"', '" + workFlowName+"')\">History</button>"+
+		"<button class='tablinks-workflow' id='main-workflow-info-checkpoint-tab' onclick='console.log(\"Checkpoint button clicked\")'>Checkpoint</button>" +
 		" </div>"+
 		"<div id=\"main-workflow-info-code\" class=\"tabcontent-workflow generalshadow\" style=\"height:calc(100% - 265px); overflow-y: scroll; left:0; margin:0; padding: 5px; \">"+
 		"	<div class=\"row\" style=\"height:100%;margin:0;\">"+
@@ -222,18 +223,17 @@ GW.workflow = {
 
 	switchTab: function (ele, name){
 		console.log("Turn on the tab " + name)
-		  
-		var i, tabcontent, tablinks;
-		tabcontent = document.getElementsByClassName("tabcontent-workflow");
-		for (i = 0; i < tabcontent.length; i++) {
-		  tabcontent[i].style.display = "none";
-		}
-		tablinks = document.getElementsByClassName("tablinks-workflow");
-		for (i = 0; i < tablinks.length; i++) {
-		  tablinks[i].className = tablinks[i].className.replace(" active", "");
-		}
+
+		document.querySelectorAll('.tabcontent-workflow').forEach(tabContent => {
+			tabContent.style.display = "none";
+		});
+
+		document.querySelectorAll('.tablinks-workflow').forEach(tabLink => {
+			tabLink.classList.remove("active");
+		});
+
 		document.getElementById(name).style.display = "block";
-		ele.className += " active";
+		ele.classList.add("active");
 
 	},
 
