@@ -12,6 +12,7 @@ import java.util.Map;
 
 import javax.websocket.Session;
 
+import com.fasterxml.jackson.databind.JsonSerializable.Base;
 import com.gw.jpa.Environment;
 import com.gw.jpa.ExecutionStatus;
 import com.gw.jpa.GWProcess;
@@ -27,6 +28,7 @@ import com.gw.utils.OSValidator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -92,6 +94,7 @@ public class LocalSessionNixImpl implements LocalSession {
     public LocalSessionNixImpl() {
     	
     	//this is for spring
+		log.info("localsessionniximpl object is created for " + token); 
     	
     }
     
@@ -111,10 +114,10 @@ public class LocalSessionNixImpl implements LocalSession {
 		this.isClose = false;
 		
 		history = history_tool.initProcessHistory(history_id, processid, script);
+
+		// this.sender = createLocalSessionOutput(); 
 		
 	}
-
-	
 	
 	/**
 	 * If the process ends with error
@@ -332,7 +335,7 @@ public class LocalSessionNixImpl implements LocalSession {
 
 			if(BaseTool.isNull(bin)) bin = "python";
     		
-    		builder.command(new String[] {bin, pythonfilename} );
+    		builder.command(new String[] {bin, "-u", pythonfilename} );
     		
     		builder.redirectErrorStream(true);
     		
