@@ -11,6 +11,10 @@ GW.process = {
 	current_pid: null,
 
 	last_executed_process_id: null,
+
+	process_id: null,
+
+	history_id: null,
 	
 	editOn: false, //false: disable is false, all fields are activated; true: all fields are deactivated.
 	
@@ -521,9 +525,6 @@ GW.process = {
 	 */
 	showHistoryDifference: function(history_id, previous_history_id) {
 		
-		console.log("current history id: " + history_id);
-		console.log("previous history id: " + previous_history_id);
-
 		// ajax call for the current history id details:
 		$.ajax({
 			
@@ -567,20 +568,10 @@ GW.process = {
 				
 			// }
 
-			console.log("Sorted Array: ", msg);
-			
 			msg = GW.general.parseResponse(msg);
 
 			msg.code = msg.input;
 			
-			// GW.process.display(msg);
-			
-			//GW.process.displayOutput(msg);
-
-			//GW.process.switchTab(document.getElementById("main-process-info-code-tab"), "main-process-info-code");
-
-			//if(GW.editor.isfullscreen) GW.editor.switchFullScreen();
-
 			// current code for dialogue box
 			console.log("current code: " + msg.code);
 			//GW.process.diffDialog(msg.code, "");
@@ -606,12 +597,11 @@ GW.process = {
 					return;
 					
 				}
-				console.log("Sorted Array: ", msg_prv);
+				
 				msg_prv = GW.general.parseResponse(msg_prv);
+				
 				msg_prv.code = msg_prv.input;
 
-				// code for dialogue box
-				console.log("previous code: " + msg_prv.code);
 				GW.process.diffDialog(msg, msg_prv);
 				
 			}).fail(function(jxr, status){
@@ -926,7 +916,7 @@ GW.process = {
 	 */
 	showHistoryDetails: function(history_id){
 		
-		console.log("history id: " + history_id);
+		GW.process.history_id = history_id;
 
 		$.ajax({
 			
@@ -938,8 +928,6 @@ GW.process = {
 			
 		}).done(function(msg){
 
-			console.log("Log Message: " + msg);
-			
 			if(msg==""){
 				
 				alert("Cannot find the process history in the database.");
@@ -1310,6 +1298,10 @@ GW.process = {
 		var process_id = null;
 		
 		var process_name = null;
+
+		GW.workspace.currentmode = 1;
+
+        GW.ssh.process_output_id = "process-log-window"
 		
 		msg = GW.general.parseResponse(msg);
 
@@ -1801,8 +1793,6 @@ GW.process = {
 			
 			var paramval = inputfield.val()
 			
-			console.log(paramname + " - " +paramval);
-			
 			pcode.params.push({name: paramname.substring(6), value: paramval})
 			
 		});
@@ -2052,15 +2042,13 @@ GW.process = {
 			
 			if(msg){
 
-				console.log(msg)
-				
 				msg = GW.general.parseResponse(msg);
 				
 				if(msg.ret == "success"){
 					
 					console.log("the process is under execution.");
 					
-					console.log("history id: " + msg.history_id);
+					GW.process.history_id = msg.history_id
 					
 				}else if(msg.ret == "fail"){
 					
@@ -2421,10 +2409,6 @@ GW.process = {
 				var hostid = $("#hostselector").children(":selected").attr("id");
 				
 				var hostip = $("#hostselector").children(":selected").attr("value");
-				
-				console.log("host ip: " + hostip);
-				
-				console.log("selected host: " + hostid);
 				
 				if(hostip=="127.0.0.1"){
 					

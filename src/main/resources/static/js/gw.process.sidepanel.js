@@ -89,7 +89,7 @@ GW.process.sidepanel = {
 
     showHistoryDetails: function(history_id){
 		
-		console.log("history id: " + history_id);
+        GW.process.history_id = history_id;
 
 		$.ajax({
 			
@@ -100,9 +100,7 @@ GW.process.sidepanel = {
 			data: "type=process&id=" + history_id
 			
 		}).done(function(msg){
-
-			console.log("Log Message: " + msg);
-			
+            
 			if(msg==""){
 				
 				alert("Cannot find the process history in the database.");
@@ -114,6 +112,8 @@ GW.process.sidepanel = {
 			msg = GW.general.parseResponse(msg);
 
 			msg.code = msg.input;
+
+            GW.process.history_id = msg.hid
 			
 			GW.process.sidepanel.display(msg);
 			
@@ -208,6 +208,8 @@ GW.process.sidepanel = {
                 msg = GW.general.parseResponse(msg);
 
                 if("history_output" in msg && msg.history_output!=null){
+
+                    GW.process.history_id = msg.history_id
         
                     msgout = msg.history_output.replaceAll("\n", "<br/>");
     
@@ -264,6 +266,12 @@ GW.process.sidepanel = {
         GW.process.sidepanel.current_process_lang = msg.lang;
 
         GW.process.sidepanel.current_process_category = code_type
+
+        GW.ssh.current_process_log_length = 0
+
+        GW.workspace.currentmode = 2;
+
+        GW.ssh.process_output_id = "prompt-panel-process-log-window"
 
         let code = msg.code;
 
@@ -394,6 +402,8 @@ GW.process.sidepanel = {
         $("#prompt-panel-process-log-window").html("") //clean up the log out area
 
         GW.ssh.process_output_id = "prompt-panel-process-log-window"
+
+        GW.ssh.current_process_log_length = 0
 		
 		GW.process.sendExecuteRequest(req, dialogItself, button);
 		
