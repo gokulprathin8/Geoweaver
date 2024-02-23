@@ -3,6 +3,7 @@ package com.gw.tasks;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -68,6 +69,8 @@ public class GeoweaverWorkflowTask{
 	String token;
 	
 	Session monitor = null;
+
+	Boolean failureState = false;
 	
 	/**********************************************/
     /** section of the geoweaver history records **/
@@ -395,7 +398,8 @@ public class GeoweaverWorkflowTask{
 			
 			// while(executed_process < (nodes.size())) {
 			for(int i=0;i< nodes.size();i++){
-				
+
+
 				//find next process to execute - the id has two parts: process type id - process object id
 				
 				String nextid = String.valueOf(((JSONObject)nodes.get(i)).get("id"));
@@ -442,20 +446,33 @@ public class GeoweaverWorkflowTask{
 
 					}else{
 
+						System.out.println("CTE-> " + Arrays.toString(flags) + "  nextId:" + nextid + " nodes:" + nodes);
+
 						GeoweaverProcessTask new_task = BeanTool.getBean(GeoweaverProcessTask.class);
+						this.updateNodeStatus(nextid, flags, nodes, ExecutionStatus.FAILED);
+						saveWorkflowHistory();
+						sendStatus(nodes, flags);
+						monitor.getBasicRemote().sendText("{\"workflow_status\": \"completed\", \"workflow_history_id\": \""+wid+"\"}");
+						tm.notifyWaitinglist();
+						this.history_indicator = ExecutionStatus.STOPPED;
+						monitor.close();
+						this.history_input += nextid + ";";
+						this.history_output += nexthistoryid + ";";
+						this.failureState = true;
+						break;
 
-						Environment env = et.getEnvironmentById(envid);
-						if(BaseTool.isNull(env)){
-							new_task.initialize(nexthistoryid, nextid, hid, password, token, true, null, null, null, this.history_id); //what is token?
-						}else{
-							new_task.initialize(nexthistoryid, nextid, hid, password, token, true, env.getBin(), env.getPyenv(), env.getBasedir(), this.history_id); //what is token?
-						}
-						
-						new_task.setPreconditionProcesses(node2condition.get(nexthistoryid));
-
-						log.debug("Precondition number: " + node2condition.get(nexthistoryid).size());
-						
-						tm.addANewTask(new_task);
+//						Environment env = et.getEnvironmentById(envid);
+//						if(BaseTool.isNull(env)){
+//							new_task.initialize(nexthistoryid, nextid, hid, password, token, true, null, null, null, this.history_id); //what is token?
+//						}else{
+//							new_task.initialize(nexthistoryid, nextid, hid, password, token, true, env.getBin(), env.getPyenv(), env.getBasedir(), this.history_id); //what is token?
+//						}
+//
+//						new_task.setPreconditionProcesses(node2condition.get(nexthistoryid));
+//
+//						log.debug("Precondition number: " + node2condition.get(nexthistoryid).size());
+//
+//						tm.addANewTask(new_task);
 
 					}
 

@@ -42,14 +42,13 @@ GW.monitor = {
 
 				var returnmsg = $.parseJSON(e.data)
 
-				if(returnmsg.workflow_status=="completed"){
+				console.log('got new message', returnmsg)
 
+				if (returnmsg['workflow_status'] === "completed") {
+					console.log('workflow execution completed. stopping monitor');
 					GW.monitor.stopMonitor();
-
-				}else{
-
+				}else {
 					GW.workspace.updateStatus(returnmsg);
-
 				}
 				
 			}
