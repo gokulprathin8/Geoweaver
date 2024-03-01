@@ -336,12 +336,13 @@ public class WorkflowTool {
 		//use multiple threads to execute the processes
 		
 		String resp = null;
+		boolean shouldStop = false;
 		
 		try {
 			
 			task.initialize(history_id, wid, mode, hosts, pswds, envs, token);
 			
-			task.execute();
+			task.execute(shouldStop);
 
 			resp = "{\"history_id\": \""+task.getHistory_id()+
 					

@@ -345,7 +345,7 @@ public class GeoweaverWorkflowTask{
 		
 	}
 
-	public void execute() {
+	public void execute(boolean shouldStop) {
 		
 		log.debug(" + + + start Geoweaver workflow " + wid + " - history id : " + this.history_id);
 		
@@ -395,6 +395,10 @@ public class GeoweaverWorkflowTask{
 			
 			// while(executed_process < (nodes.size())) {
 			for(int i=0;i< nodes.size();i++){
+
+				if (shouldStop) {
+					break;
+				}
 				
 				//find next process to execute - the id has two parts: process type id - process object id
 				
@@ -415,19 +419,7 @@ public class GeoweaverWorkflowTask{
 				String password = mode.equals("one")?pswds[0]:pswds[i];
 
 				String envid = mode.equals("one")?envs[0]:envs[i];
-				
-				//nodes
-//				[{"title":"download-landsat","id":"nhi96d-7VZhh","x":119,"y":279},
-// {"title":"filter_cloud","id":"rh1u8q-4sCmg","x":286,"y":148},
-// {"title":"filter_shadow","id":"rpnhlg-JZfyQ","x":455,"y":282},
-// {"title":"match_cdl_landsat","id":"omop8l-1p5x1","x":624,"y":152}]
-				
-				//edges
-//				[{"source":{"title":"sleep5s","id":"ac4724-jL0Ep","x":342.67081451416016,"y":268.8715720176697},
-// "target":{"title":"testbash","id":"199vsg-Xr6FZ","x":465.2892303466797,"y":41.6651611328125}},
-// {"source":{"title":"testbash","id":"199vsg-oAq2d","x":-7.481706619262695,"y":180.70700073242188},
-// "target":{"title":"sleep5s","id":"ac4724-jL0Ep","x":342.67081451416016,"y":268.8715720176697}}]
-				
+
 				try {
 
 					if("true".equals(skip)){
@@ -460,7 +452,8 @@ public class GeoweaverWorkflowTask{
 					}
 
 				}catch(Exception e) {
-					
+
+
 					this.updateNodeStatus(nextid, flags, nodes, ExecutionStatus.FAILED);
 				
 					sendStatus(nodes, flags);
