@@ -21,11 +21,11 @@ public class GWProcess {
 	String name;
 	
 	@Lob
-	@Column(columnDefinition = "LONGTEXT")
+	@Column
 	String description;
 
 	@Lob
-	@Column(columnDefinition = "LONGTEXT")
+	@Column
 	String code;
 
 	String lang;

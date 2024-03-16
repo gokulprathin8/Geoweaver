@@ -33,11 +33,11 @@ public class Checkpoint {
     private String executionId;
 
     @Lob
-    @Column(name = "edges", columnDefinition = "CLOB")
+    @Column(name = "edges")
     private String edges;
 
     @Lob
-    @Column(name = "nodes", columnDefinition = "CLOB")
+    @Column(name = "nodes")
     private String nodes;
 
     @ManyToOne(fetch = FetchType.EAGER)

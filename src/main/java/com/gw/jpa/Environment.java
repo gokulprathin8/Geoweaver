@@ -23,7 +23,7 @@ public class Environment {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Host hostobj;
 
-	@Column(columnDefinition = "LONGTEXT")
+	@Column
 	String settings;
 
 	

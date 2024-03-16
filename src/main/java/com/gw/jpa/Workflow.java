@@ -16,11 +16,11 @@ public class Workflow {
 	private String confidential;
 	
 	@Lob
-	@Column(columnDefinition = "LONGTEXT")
+	@Column
 	private String edges;
 
 	@Lob
-	@Column(columnDefinition = "LONGTEXT")
+	@Column
 	private String nodes;
 	
 	

@@ -11,6 +11,7 @@ import javax.persistence.Id;
 
 import org.springframework.lang.NonNull;
 
+
 @Entity
 public class GWUser {
 

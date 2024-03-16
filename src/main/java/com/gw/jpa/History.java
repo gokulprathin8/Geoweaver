@@ -22,12 +22,12 @@ public class History {
     private String			 history_id;
 	
 	@Lob
-	@Column(columnDefinition = "LONGTEXT")
+	@Column
     private String			 history_input;
     
     //maximum jupyter notebook 100mb
 	@Lob
-    @Column(columnDefinition = "LONGTEXT")
+    @Column
     private String			 history_output;
     
     @Temporal(TemporalType.TIMESTAMP)
@@ -36,7 +36,7 @@ public class History {
     @Temporal(TemporalType.TIMESTAMP)
     private Date			 history_end_time;
     
-    @Column(columnDefinition = "TEXT")
+    @Column
 	private String history_notes;
 
     
