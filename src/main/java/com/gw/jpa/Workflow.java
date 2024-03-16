@@ -1,5 +1,7 @@
 package com.gw.jpa;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Lob;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,10 +18,12 @@ public class Workflow {
 	private String confidential;
 	
 	@Lob
+	@Type(type = "org.hibernate.type.TextType")
 	@Column
 	private String edges;
 
 	@Lob
+	@Type(type = "org.hibernate.type.TextType")
 	@Column
 	private String nodes;
 	

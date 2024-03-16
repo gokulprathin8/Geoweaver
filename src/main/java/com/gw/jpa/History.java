@@ -1,6 +1,8 @@
 package com.gw.jpa;
 
 
+import org.hibernate.annotations.Type;
+
 import java.util.Date;
 
 import javax.persistence.Lob;
@@ -22,11 +24,13 @@ public class History {
     private String			 history_id;
 	
 	@Lob
+	@Type(type = "org.hibernate.type.TextType")
 	@Column
     private String			 history_input;
     
     //maximum jupyter notebook 100mb
 	@Lob
+	@Type(type = "org.hibernate.type.TextType")
     @Column
     private String			 history_output;
     

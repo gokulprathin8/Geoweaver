@@ -37,6 +37,7 @@ public class Checkpoint {
     private String edges;
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "nodes")
     private String nodes;
 

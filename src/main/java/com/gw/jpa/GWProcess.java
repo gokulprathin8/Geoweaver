@@ -1,5 +1,7 @@
 package com.gw.jpa;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Column;
 import javax.persistence.Lob;
 import javax.persistence.Entity;
@@ -21,10 +23,12 @@ public class GWProcess {
 	String name;
 	
 	@Lob
+	@Type(type = "org.hibernate.type.TextType")
 	@Column
 	String description;
 
 	@Lob
+	@Type(type = "org.hibernate.type.TextType")
 	@Column
 	String code;
 
